@@ -11,7 +11,7 @@ class AvgComposite(Drawable):
         super(AvgComposite, self).__init__(title, drawable.getN())
 
     def calculateY(self):
-        accum = self.drawable.y
+        result = self.drawable.y
         for arg in self.args:
-            accum = accum + arg.y
-        return accum / len(self.args)
+            result = result + arg.y
+        return result / len(self.args)

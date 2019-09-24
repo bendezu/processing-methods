@@ -9,7 +9,7 @@ class AdditionComposite(Drawable):
         super(AdditionComposite, self).__init__(title, drawable.getN())
 
     def calculateY(self):
-        accum = self.drawable.y
+        result = self.drawable.y
         for arg in self.args:
-            accum = accum + arg.y
-        return accum
+            result = result + arg.y
+        return result

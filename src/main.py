@@ -66,5 +66,4 @@ figure = canvas.plot()
 
 io.savePlotToFile(figure, "result")
 
-# fix myrandom
-# стационарность Не каждый с каждым
+# TODO fix myrandom

@@ -30,7 +30,7 @@ class IOController:
 
     def readFromFile(self, filename):
         x, y = np.loadtxt(INPUT_FOLDER + filename, delimiter=DELIMITER, unpack=True)
-        return Drawable(filename, x=x, y=y)
+        return Drawable(filename[3:-len(DATA_FORMAT)], x=x, y=y)
 
     def savePlotToFile(self, figure, name):
         os.makedirs(OUTPUT_FOLDER, exist_ok=True)

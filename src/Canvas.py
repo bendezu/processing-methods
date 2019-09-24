@@ -21,6 +21,6 @@ class Canvas:
         return fig
 
     def get_description(self, drawable):
-        is_stationary = "Стационарен" if drawable.isStationar(intervals=10, delta_percent=0.05) else "Не стационарен"
+        is_stationary = "Стационарен" if drawable.is_stationary(intervals=10, delta_percent=0.05) else "Не стационарен"
         stddev = "Стандартное отклонение " + str(drawable.getStdDev())
         return is_stationary + "\n" + stddev + "\n\n"

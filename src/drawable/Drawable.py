@@ -27,7 +27,7 @@ class Drawable:
         for pos in range(start, end):
             self.y[int(pos)] = self.y[int(pos)] + offset
 
-    def isStationar(self, intervals, delta_percent):
+    def is_stationary(self, intervals, delta_percent):
         delta = (np.max(self.y) - np.min(self.y)) * delta_percent
         interval_size = int(len(self.x) / intervals)
         means = [None] * intervals
@@ -39,10 +39,9 @@ class Drawable:
             means[interval] = self.getMean(self.y[start:end])
             dispersions[interval] = self.getDispersion(self.y[start:end])
 
-        for i in range(0, intervals):
-            for j in range(i, intervals):
-                if (abs(dispersions[i] - dispersions[j]) > delta) or (abs(means[i] - means[j]) > delta):
-                    return False
+        for i in range(0, intervals - 1):
+            if (abs(dispersions[i] - dispersions[i + 1]) > delta) or (abs(means[i] - means[i + 1]) > delta):
+                return False
         return True
 
     def getMean(self, array):
@@ -52,7 +51,7 @@ class Drawable:
         mean = self.getMean(array)
         return sum((xi - mean) ** 2 for xi in array) / len(array)
 
-    def getStdDev(self, array = None):
+    def getStdDev(self, array=None):
         array = self.y if array is None else array
         return math.sqrt(self.getDispersion(array))
 

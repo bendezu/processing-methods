@@ -22,7 +22,8 @@ class Drawable:
             sign = 1 if random.random() < 0.5 else -1
             self.y[int(pos)] = self.y[int(pos)] + y_range * size_multiplier * random.random() * sign
 
-    def shift(self, start, end, offset):
+    def shift(self, offset, start=0, end=None):
+        end = self.getN() if end is None else end
         for pos in range(start, end):
             self.y[int(pos)] = self.y[int(pos)] + offset
 

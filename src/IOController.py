@@ -5,17 +5,19 @@ from src.drawable.Drawable import Drawable
 DATA_FORMAT = ".dat"
 FIGURE_FORMAT = ".png"
 DELIMITER = ", "
-INPUT_FOLDER = "../input/"
-OUTPUT_FOLDER = "../output/"
+INPUT_FOLDER = "input/"
+OUTPUT_FOLDER = "output/"
 
 
 class IOController:
 
-    def clearDirs(self):
-        for file in os.listdir(INPUT_FOLDER):
-            os.unlink(INPUT_FOLDER + file)
-        for file in os.listdir(OUTPUT_FOLDER):
-            os.unlink(OUTPUT_FOLDER + file)
+    def clear_dirs(self):
+        if os.path.exists(INPUT_FOLDER):
+            for file in os.listdir(INPUT_FOLDER):
+                os.unlink(INPUT_FOLDER + file)
+        if os.path.exists(OUTPUT_FOLDER):
+            for file in os.listdir(OUTPUT_FOLDER):
+                os.unlink(OUTPUT_FOLDER + file)
 
     def writeToFile(self, drawable):
         with open(INPUT_FOLDER + drawable.title + DATA_FORMAT, 'w') as file:
@@ -30,4 +32,5 @@ class IOController:
         return Drawable(filename, x=x, y=y)
 
     def savePlotToFile(self, figure, name):
+        os.makedirs(OUTPUT_FOLDER, exist_ok=True)
         figure.savefig(OUTPUT_FOLDER + name + FIGURE_FORMAT)

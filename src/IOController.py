@@ -19,13 +19,14 @@ class IOController:
             for file in os.listdir(OUTPUT_FOLDER):
                 os.unlink(OUTPUT_FOLDER + file)
 
-    def writeToFile(self, drawable):
-        with open(INPUT_FOLDER + drawable.title + DATA_FORMAT, 'w') as file:
+    def writeToFile(self, drawable, ordinal):
+        os.makedirs(INPUT_FOLDER, exist_ok=True)
+        with open(INPUT_FOLDER + str(ordinal) + ". " + drawable.title + DATA_FORMAT, 'w+') as file:
             for i in range(len(drawable.x)):
                 file.write(str(drawable.x[i]) + DELIMITER + str(drawable.y[i]) + "\n")
 
     def getDrawablesInDir(self):
-        return map(lambda file: self.readFromFile(file), os.listdir(INPUT_FOLDER))
+        return enumerate(map(lambda file: self.readFromFile(file), os.listdir(INPUT_FOLDER)))
 
     def readFromFile(self, filename):
         x, y = np.loadtxt(INPUT_FOLDER + filename, delimiter=DELIMITER, unpack=True)

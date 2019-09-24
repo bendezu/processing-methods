@@ -9,11 +9,6 @@ from src.compositing.MultiplicationComposite import MultiplicationComposite
 from src.drawable.MyRandom import MyRandom
 from src.drawable.Random import Random
 
-NUM_FIRST = "1. "
-NUM_SECOND = "2. "
-NUM_THIRD = "3. "
-NUM_FOURTH = "4. "
-
 canvas = Canvas()
 io = IOController()
 
@@ -48,21 +43,21 @@ avg_of_randoms = AvgComposite(
     *[Random(title="", N=N, fromNum=FROM_NUM, toNum=TO_NUM) for _ in range(10)]
 )
 
-drawables = [
+drawables = enumerate([
     random,
     avg_of_randoms,
     line_x_random,
     concat
-]
+])
 
 io.clear_dirs()
 
-for drawable in drawables:
-    io.writeToFile(drawable)
+for i, drawable in drawables:
+    io.writeToFile(drawable, ordinal=i + 1)
 
 drawables = io.getDrawablesInDir()
 
-for i, drawable in enumerate(drawables):
+for i, drawable in drawables:
     # drawable.normalize(S=10)
     # drawable.add_spikes(count=10, size_multiplier=2)
     # drawable.shift(offset=150, start=200, end=700)
@@ -71,6 +66,5 @@ figure = canvas.plot()
 
 io.savePlotToFile(figure, "result")
 
-# ordinal title
 # fix myrandom
 # стационарность Не каждый с каждым

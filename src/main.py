@@ -3,6 +3,7 @@ from src.IOController import IOController
 from src.compositing.AdditionComposite import AdditionComposite
 from src.compositing.AvgComposite import AvgComposite
 from src.compositing.ConcatComposite import ConcatComposite
+from src.compositing.DiscreteFourierTransform import DiscreteFourierTransform
 from src.drawable.Exp import Exp
 from src.drawable.Harmonic import Harmonic
 from src.drawable.Line import Line
@@ -44,13 +45,17 @@ avg_of_randoms = AvgComposite(
     *[Random(title="", N=N, fromNum=FROM_NUM, toNum=TO_NUM) for _ in range(10)]
 )
 
-garmonic = Harmonic(title="asd", N=N, A0=100, f0=11, delta_t=0.001)
+harmonic_11 = Harmonic(title="asd", N=N, A0=100, f0=11, delta_t=0.001)
+harmonic_110 = Harmonic(title="asd", N=N, A0=100, f0=110, delta_t=0.001)
+harmonic_250 = Harmonic(title="asd", N=N, A0=100, f0=250, delta_t=0.001)
+harmonic_510 = Harmonic(title="asd", N=N, A0=100, f0=510, delta_t=0.001)
+dft_11 = DiscreteFourierTransform("DFT 11", harmonic_11)
+dft_110 = DiscreteFourierTransform("DFT 110", harmonic_110)
+dft_250 = DiscreteFourierTransform("DFT 250", harmonic_250)
+dft_510 = DiscreteFourierTransform("DFT 510", harmonic_510)
 
 drawables = enumerate([
-    Harmonic(title="f=11", N=N, A0=100, f0=11, delta_t=0.001),
-    Harmonic(title="f=110", N=N, A0=100, f0=110, delta_t=0.001),
-    Harmonic(title="f=250", N=N, A0=100, f0=250, delta_t=0.001),
-    Harmonic(title="f=510", N=N, A0=100, f0=510, delta_t=0.001)
+    dft_11, dft_110, dft_250, dft_510
 ])
 
 io.clear_dirs()
@@ -70,3 +75,4 @@ figure = canvas.plot()
 io.savePlotToFile(figure, "result")
 
 # TODO fix myrandom
+# TODO rename drawable metrics

@@ -15,4 +15,6 @@ class MyRandom(Drawable):
         return [self.getRand() for _ in range(len(self.x))]
 
     def getRand(self):
-        return math.sin(time.clock() * 1000000)
+        center = (self.toNum + self.fromNum) / 2
+        diameter = (self.toNum - self.fromNum) / 2
+        return math.sin(time.clock() * time.time() % 10000000) * diameter + center

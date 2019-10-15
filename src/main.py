@@ -4,6 +4,7 @@ from src.compositing.AdditionComposite import AdditionComposite
 from src.compositing.AvgComposite import AvgComposite
 from src.compositing.ConcatComposite import ConcatComposite
 from src.drawable.Exp import Exp
+from src.drawable.Harmonic import Harmonic
 from src.drawable.Line import Line
 from src.compositing.MultiplicationComposite import MultiplicationComposite
 from src.drawable.MyRandom import MyRandom
@@ -18,7 +19,7 @@ TO_NUM = 100
 
 ascending_line = Line(title="Ascending line", N=N, k=3, b=2)
 descending_line = Line(title="Descending line", N=N, k=-2, b=0)
-exponential = Exp(title="Exponential", N=N, alpha=0.1, beta=2)
+exponential = Exp(title="Exponential", N=N, alpha=10e-3, beta=2)
 concat = ConcatComposite(
     "Piecewize function",
     Line(title="", N=500, k=2, b=0),
@@ -43,11 +44,13 @@ avg_of_randoms = AvgComposite(
     *[Random(title="", N=N, fromNum=FROM_NUM, toNum=TO_NUM) for _ in range(10)]
 )
 
+garmonic = Harmonic(title="asd", N=N, A0=100, f0=11, delta_t=0.001)
+
 drawables = enumerate([
-    random,
-    avg_of_randoms,
-    line_x_random,
-    concat
+    Harmonic(title="f=11", N=N, A0=100, f0=11, delta_t=0.001),
+    Harmonic(title="f=110", N=N, A0=100, f0=110, delta_t=0.001),
+    Harmonic(title="f=250", N=N, A0=100, f0=250, delta_t=0.001),
+    Harmonic(title="f=510", N=N, A0=100, f0=510, delta_t=0.001)
 ])
 
 io.clear_dirs()

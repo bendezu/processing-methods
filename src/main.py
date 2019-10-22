@@ -54,6 +54,11 @@ dft_110 = DiscreteFourierTransform("DFT 110", harmonic_110)
 dft_250 = DiscreteFourierTransform("DFT 250", harmonic_250)
 dft_510 = DiscreteFourierTransform("DFT 510", harmonic_510)
 
+polyharmonic_25_11 = AdditionComposite(
+    "Polyharmonic",
+
+)
+
 drawables = enumerate([
     dft_11, dft_110, dft_250, dft_510
 ])
@@ -76,3 +81,5 @@ io.savePlotToFile(figure, "result")
 
 # TODO fix myrandom
 # TODO rename drawable metrics
+# TODO dft adjust scale
+# TODO polyharmonic

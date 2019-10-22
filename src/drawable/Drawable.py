@@ -39,8 +39,11 @@ class Drawable:
             means[interval] = self.getMean(self.y[start:end])
             dispersions[interval] = self.getDispersion(self.y[start:end])
 
+        # print("Среднее[] :" + str(means))
+        # print("Дисперсия[] " + str(dispersions))
+
         for i in range(0, intervals - 1):
-            if (abs(dispersions[i] - dispersions[i + 1]) > delta) or (abs(means[i] - means[i + 1]) > delta):
+            if (math.sqrt(abs(dispersions[i] - dispersions[i + 1])) > delta * 2) or (abs(means[i] - means[i + 1]) > delta):
                 return False
         return True
 
@@ -48,12 +51,33 @@ class Drawable:
         return sum(array) / len(array)
 
     def getDispersion(self, array):
-        mean = self.getMean(array)
-        return sum((xi - mean) ** 2 for xi in array) / len(array)
+        return self.m(power=2, array=array)
 
     def getStdDev(self, array=None):
         array = self.y if array is None else array
         return math.sqrt(self.getDispersion(array))
+
+    def m(self, power, array=None):
+        array = self.y if array is None else array
+        mean = self.getMean(array)
+        return sum((xi - mean) ** power for xi in array) / len(array)
+
+    def absDev(self, array=None):
+        array = self.y if array is None else array
+        mean = self.getMean(array)
+        return sum(abs(xi - mean) for xi in array) / len(array)
+
+    def gamma1(self):
+        return self.m(power=3) / (self.getStdDev() ** 3)
+
+    def gamma2(self):
+        return self.m(power=4) / (self.getStdDev() ** 4) - 3
+
+    def psi2(self):
+        return sum(xi ** 2 for xi in self.y) / len(self.y)
+
+    def epsilon(self):
+        return math.sqrt(self.psi2())
 
     def getN(self):
         return len(self.x)

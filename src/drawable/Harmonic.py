@@ -2,6 +2,8 @@ import math
 
 from src.drawable.Drawable import Drawable
 
+import numpy as np
+
 
 class Harmonic(Drawable):
 
@@ -12,4 +14,4 @@ class Harmonic(Drawable):
         super(Harmonic, self).__init__(title, N)
 
     def calculateY(self):
-        return [self.A0 * math.sin(2 * math.pi * self.f0 * xi * self.delta_t) for xi in self.x]
+        return np.array([self.A0 * math.sin(2 * math.pi * self.f0 * xi * self.delta_t) for xi in self.x])

@@ -45,22 +45,24 @@ avg_of_randoms = AvgComposite(
     *[Random(title="", N=N, fromNum=FROM_NUM, toNum=TO_NUM) for _ in range(10)]
 )
 
-harmonic_11 = Harmonic(title="asd", N=N, A0=100, f0=11, delta_t=0.001)
-harmonic_110 = Harmonic(title="asd", N=N, A0=100, f0=110, delta_t=0.001)
-harmonic_250 = Harmonic(title="asd", N=N, A0=100, f0=250, delta_t=0.001)
-harmonic_510 = Harmonic(title="asd", N=N, A0=100, f0=510, delta_t=0.001)
+harmonic_11 = Harmonic(title="Harmonic f=11", N=N, A0=100, f0=11, delta_t=0.001)
+harmonic_110 = Harmonic(title="Harmonic f=110", N=N, A0=100, f0=110, delta_t=0.001)
+harmonic_250 = Harmonic(title="Harmonic f=250", N=N, A0=100, f0=250, delta_t=0.001)
+harmonic_510 = Harmonic(title="Harmonic f=510", N=N, A0=100, f0=510, delta_t=0.001)
 dft_11 = DiscreteFourierTransform("DFT 11", harmonic_11)
 dft_110 = DiscreteFourierTransform("DFT 110", harmonic_110)
 dft_250 = DiscreteFourierTransform("DFT 250", harmonic_250)
 dft_510 = DiscreteFourierTransform("DFT 510", harmonic_510)
 
-polyharmonic_25_11 = AdditionComposite(
+polyharmonic = AdditionComposite(
     "Polyharmonic",
-
+    Harmonic(title="", N=N, A0=25, f0=11, delta_t=0.001),
+    Harmonic(title="", N=N, A0=35, f0=41, delta_t=0.001),
+    Harmonic(title="", N=N, A0=30, f0=141, delta_t=0.001),
 )
 
 drawables = enumerate([
-    dft_11, dft_110, dft_250, dft_510
+    polyharmonic, polyharmonic, polyharmonic, polyharmonic
 ])
 
 io.clear_dirs()
@@ -82,4 +84,3 @@ io.savePlotToFile(figure, "result")
 # TODO fix myrandom
 # TODO rename drawable metrics
 # TODO dft adjust scale
-# TODO polyharmonic

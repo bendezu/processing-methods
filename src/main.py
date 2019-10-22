@@ -2,7 +2,6 @@ from src.Canvas import Canvas
 from src.IOController import IOController
 from src.compositing.AdditionComposite import AdditionComposite
 from src.compositing.DiscreteFourierTransform import DiscreteFourierTransform
-from src.const.september import line_plus_random
 from src.drawable.Harmonic import Harmonic
 from src.const.common import N, FROM_NUM, TO_NUM
 
@@ -25,8 +24,29 @@ polyharmonic = AdditionComposite(
     Harmonic(title="", N=N, A0=30, f0=141, delta_t=0.001),
 )
 
+def harmonic_shift():
+    graph = Harmonic(title="Harmonic shift", N=N, A0=100, f0=110, delta_t=0.001)
+    graph.shift(offset=100)
+    return graph
+
+def harmonic_spikes():
+    graph = Harmonic(title="Harmonic spikes", N=N, A0=100, f0=110, delta_t=0.001)
+    graph.add_spikes(count=10, size_multiplier=3)
+    return graph
+
+def harmonic_anti_shift():
+    graph = harmonic_shift()
+    graph.anti_shift()
+    return graph
+
+def harmonic_anti_spikes():
+    graph = harmonic_spikes()
+    graph.suppress_spikes(FROM_NUM, TO_NUM)
+    return graph
+
+
 drawables = enumerate([
-    polyharmonic, polyharmonic, polyharmonic, line_plus_random
+    harmonic_shift(), harmonic_spikes(), harmonic_anti_shift(), harmonic_anti_spikes()
 ])
 
 io.clear_dirs()
@@ -48,3 +68,4 @@ io.savePlotToFile(figure, "result")
 # TODO fix myrandom
 # TODO rename drawable metrics
 # TODO dft adjust scale
+# TODO suppress spikes by sliding window

@@ -22,10 +22,19 @@ class Drawable:
             sign = 1 if random.random() < 0.5 else -1
             self.y[int(pos)] = self.y[int(pos)] + y_range * size_multiplier * random.random() * sign
 
+    def suppress_spikes(self, min_y, max_y):
+        for i in range(self.getN()):
+            if self.y[i] < min_y or self.y[i] > max_y:
+                self.y[i] = (self.y[i-1] + self.y[i+1]) / 2
+
     def shift(self, offset, start=0, end=None):
         end = self.getN() if end is None else end
         for pos in range(start, end):
             self.y[int(pos)] = self.y[int(pos)] + offset
+
+    def anti_shift(self):
+        mean = self.getMean(self.y)
+        self.shift(-mean)
 
     def is_stationary(self, intervals, delta_percent):
         delta = (np.max(self.y) - np.min(self.y)) * delta_percent

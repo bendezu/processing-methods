@@ -27,6 +27,17 @@ class Drawable:
             if self.y[i] < min_y or self.y[i] > max_y:
                 self.y[i] = (self.y[i-1] + self.y[i+1]) / 2
 
+    def anti_trend(self, window_size=3):
+        window_radius = int(window_size / 2)
+        means = [0] * self.getN()
+        for i in range(self.getN()):
+            window_start = max(i - window_radius, 0)
+            window_end = min(i + window_radius, self.getN())
+            means[i] = self.getMean(self.y[window_start:window_end])
+        for i in range(self.getN()):
+            self.y[i] = self.y[i] - means[i]
+
+
     def shift(self, offset, start=0, end=None):
         end = self.getN() if end is None else end
         for pos in range(start, end):

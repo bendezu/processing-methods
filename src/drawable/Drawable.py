@@ -37,7 +37,6 @@ class Drawable:
         for i in range(self.getN()):
             self.y[i] = self.y[i] - means[i]
 
-
     def shift(self, offset, start=0, end=None):
         end = self.getN() if end is None else end
         for pos in range(start, end):

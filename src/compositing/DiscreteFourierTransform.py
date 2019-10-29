@@ -19,5 +19,7 @@ class DiscreteFourierTransform(Drawable):
                 double_angle = 2 * math.pi * t * k / n
                 real_sum += self.drawable.y[t] * math.cos(double_angle)
                 imag_sum += self.drawable.y[t] * math.sin(double_angle)
+            real_sum = real_sum / n
+            imag_sum = imag_sum / n
             result[k] = math.sqrt(real_sum * real_sum + imag_sum * imag_sum)
-        return  result
+        return result

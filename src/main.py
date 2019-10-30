@@ -3,7 +3,9 @@ from src.IOController import IOController
 from src.compositing.AdditionComposite import AdditionComposite
 from src.compositing.DiscreteFourierTransform import DiscreteFourierTransform
 from src.drawable.Harmonic import Harmonic
-from src.const.common import N, FROM_NUM, TO_NUM
+from src.util.common import N, FROM_NUM, TO_NUM
+from src.drawable.Line import Line
+import copy
 
 canvas = Canvas()
 io = IOController()

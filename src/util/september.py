@@ -6,7 +6,7 @@ from src.drawable.Exp import Exp
 from src.drawable.Line import Line
 from src.drawable.MyRandom import MyRandom
 from src.drawable.Random import Random
-from src.const.common import N, FROM_NUM, TO_NUM
+from src.util.common import N, FROM_NUM, TO_NUM
 
 ascending_line = Line(title="Ascending line", N=N, k=3, b=2)
 descending_line = Line(title="Descending line", N=N, k=-2, b=0)

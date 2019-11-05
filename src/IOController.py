@@ -1,5 +1,6 @@
 import numpy as np
 import os
+import struct
 from src.drawable.Drawable import Drawable
 
 DATA_FORMAT = ".dat"
@@ -35,3 +36,10 @@ class IOController:
     def savePlotToFile(self, figure, name):
         os.makedirs(OUTPUT_FOLDER, exist_ok=True)
         figure.savefig(OUTPUT_FOLDER + name + FIGURE_FORMAT)
+
+    def read_from_dat(self, filepath):
+        with open(filepath, 'rb') as input_file:
+            array_from_file = input_file.read()
+        format = '{:d}f'.format(len(array_from_file) // 4)
+        array_from_file = struct.unpack(format, array_from_file)
+        return Drawable(filepath, N=len(array_from_file), y=array_from_file)

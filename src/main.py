@@ -1,5 +1,6 @@
 from src.Canvas import Canvas
 from src.IOController import IOController
+from src.drawable.itoprocess import ito
 from src.util.buider import harmonic, const, rand, add, line
 
 canvas = Canvas()
@@ -7,7 +8,7 @@ io = IOController()
 
 
 drawables = enumerate([
-    rand(), harmonic(),
+    rand(), ito(a=0, b=-0.002, c=1, d=70),
     const(10), add(line(), harmonic())
 ])
 

@@ -9,12 +9,13 @@ class Canvas:
     def add_drawable(self, drawable):
         self.drawables.append(drawable)
 
-    def plot(self):
+    def plot(self, show_desc=False):
         fig, axes = plt.subplots(nrows=round(len(self.drawables) / 2), ncols=2, figsize=(PLOT_SIZE, PLOT_SIZE))
         for i, drawable in enumerate(self.drawables):
             subplot = axes[int(i / 2)][i % 2]
             subplot.set_title(drawable.title)
-            subplot.set(xlabel=self.get_description(drawable))
+            if show_desc:
+                subplot.set(xlabel=self.get_description(drawable))
             subplot.plot(drawable.x, drawable.y)
         fig.tight_layout()
         plt.show()

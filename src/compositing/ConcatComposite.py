@@ -2,6 +2,10 @@ import numpy as np
 
 from src.drawable.Drawable import Drawable
 
+def concat(*args):
+    list_args = list(args)
+    title = ' -> '.join([arg.title for arg in list_args])
+    return ConcatComposite(title, list_args[0], *list_args[1:])
 
 class ConcatComposite(Drawable):
 

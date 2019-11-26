@@ -18,11 +18,11 @@ def line(k=-2, b=10):
 def rand(start=FROM_NUM, end=TO_NUM):
     return Random("Random", N=N, fromNum=start, toNum=end)
 
-def const(value):
-    return Line("Const", N=N, k=0, b=value)
+def const(value, n=N):
+    return Line("Const", N=n, k=0, b=value)
 
-def harmonic(amplitude=10, frequency=15, delta_t=0.001):
-    return Harmonic(title="Harmonic", N=N, A0=amplitude, f0=frequency, delta_t=delta_t)
+def harmonic(amplitude=10, frequency=15, delta_t=0.001, n=N):
+    return Harmonic(title="Harmonic", N=n, A0=amplitude, f0=frequency, delta_t=delta_t)
 
 # MODIFICATION
 

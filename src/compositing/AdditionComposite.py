@@ -1,5 +1,9 @@
 from src.drawable.Drawable import Drawable
 
+def add(*args):
+    list_args = list(args)
+    title = ' + '.join([arg.title for arg in list_args])
+    return AdditionComposite(title, list_args[0], *list_args[1:])
 
 class AdditionComposite(Drawable):
 

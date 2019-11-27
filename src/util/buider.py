@@ -18,7 +18,7 @@ def line(k=-2, b=10):
 def rand(start=FROM_NUM, end=TO_NUM):
     return Random("Random", N=N, fromNum=start, toNum=end)
 
-def const(value, n=N):
+def const(value=0, n=N):
     return Line("Const", N=n, k=0, b=value)
 
 def harmonic(amplitude=10, frequency=15, delta_t=0.001, n=N):
@@ -26,7 +26,7 @@ def harmonic(amplitude=10, frequency=15, delta_t=0.001, n=N):
 
 # MODIFICATION
 
-def shift(drawable, offset, clone=DEFAULT_CLONE):
+def shift(drawable, offset=100, clone=DEFAULT_CLONE):
     copied = copy.deepcopy(drawable) if clone else drawable
     copied.shift(offset)
     return copied
@@ -35,11 +35,6 @@ def spikes(drawable, count=10, size=3, clone=DEFAULT_CLONE):
     copied = copy.deepcopy(drawable) if clone else drawable
     copied.add_spikes(count=count, size_multiplier=size)
     return copied
-
-def add(*args):
-    list_args = list(args)
-    title = ' + '.join([arg.title for arg in list_args])
-    return AdditionComposite(title, list_args[0], *list_args[1:])
 
 def trunc(drawable, values):
     return Drawable(drawable.title, N=values, y=drawable.y[:values])

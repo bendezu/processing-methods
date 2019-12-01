@@ -1,14 +1,6 @@
 from src.Canvas import Canvas
 from src.IOController import IOController
-from src.compositing.AdditionComposite import add
-from src.compositing.AvgComposite import avg
-from src.compositing.ConcatComposite import concat
-from src.compositing.MultiplicationComposite import mult
-from src.compositing.hammingwindow import window
-from src.compositing.inversedft import idft
-from src.drawable.cardiogram import ecg
-from src.drawable.itoprocess import ito
-from src.util.buider import harmonic, const, rand, line, dft
+from src.util.buider import const
 
 canvas = Canvas()
 io = IOController()

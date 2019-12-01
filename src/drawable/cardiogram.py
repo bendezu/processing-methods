@@ -1,6 +1,6 @@
 import math
 
-from src.compositing.convolution import Convolution
+from src.transform.convolution import Convolution
 from src.drawable.Drawable import Drawable
 from src.util.common import N, create_array
 

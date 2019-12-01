@@ -1,9 +1,8 @@
 import copy
 
-from src.compositing.AdditionComposite import AdditionComposite
-from src.compositing.DiscreteFourierTransform import DiscreteFourierTransform
-from src.compositing.autocorrelation import AutoCorrelation
-from src.compositing.crosscorrelation import CrossCorrelation
+from src.transform.fouriertransform import DiscreteFourierTransform
+from src.transform.autocorrelation import AutoCorrelation
+from src.transform.crosscorrelation import CrossCorrelation
 from src.drawable.Drawable import Drawable
 from src.util.common import N, FROM_NUM, TO_NUM, DEFAULT_CLONE
 from src.drawable.Harmonic import Harmonic

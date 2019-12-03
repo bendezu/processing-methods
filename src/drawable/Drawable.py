@@ -8,7 +8,8 @@ class Drawable:
 
     def __init__(self, title, N=0, x=None, y=None):
         self.title = title
-        self.x = x if N == 0 else np.arange(0, N, 1)
+        length = N if y is None else len(y)
+        self.x = np.arange(0, length, 1) if x is None else x
         self.y = self.calculateY() if y is None else y
 
     def normalize(self, S):

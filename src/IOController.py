@@ -52,3 +52,14 @@ class IOController:
         format = '{:d}f'.format(len(array_from_file) // 4)
         array_from_file = struct.unpack(format, array_from_file)
         return Drawable(filepath, N=len(array_from_file), y=array_from_file)
+
+    def read_from_wav(self, filepath):
+        rate, data = wavfile.read(filepath)
+        self.last_rate = rate
+        x = np.zeros(len(data))
+        for i in range(1, len(data)):
+            x[i] = x[i - 1] + 1 / rate
+        return Drawable(filepath, x=x, y=data)
+
+    def save_to_wav(self, drawable):
+        wavfile.write(OUTPUT_FOLDER + drawable.title, self.last_rate, drawable.y)

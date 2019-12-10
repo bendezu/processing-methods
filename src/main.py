@@ -26,6 +26,15 @@ io = IOController()
 #     aaap_us, sub(aaba_us, 2000, 3000)
 # ])
 
+wav = io.read_from_wav("ma.wav")
+lowpassed = conv(wav, lowpass(dt=1/22050, fCut=250))
+drawables = enumerate([
+    wav, absolute(fft(wav)),
+    lowpassed, const()
+])
+
+io.save_to_wav(lowpassed)
+
 # io.clear_dirs()
 #
 # for i, drawable in drawables:

@@ -1,6 +1,10 @@
-import numpy as np
 import os
 import struct
+
+import numpy as np
+import pandas as pd
+from scipy.io import wavfile
+
 from src.drawable.Drawable import Drawable
 
 DATA_FORMAT = ".dat"
@@ -36,6 +40,11 @@ class IOController:
     def savePlotToFile(self, figure, name):
         os.makedirs(OUTPUT_FOLDER, exist_ok=True)
         figure.savefig(OUTPUT_FOLDER + name + FIGURE_FORMAT)
+
+    def read_from_csv(self, filepath):
+        df = pd.read_csv(filepath)
+        data = df['Open']
+        return Drawable(filepath, N=len(data), y=data)
 
     def read_from_dat(self, filepath):
         with open(filepath, 'rb') as input_file:

@@ -1,5 +1,7 @@
 import copy
 
+import numpy as np
+
 from src.transform.fouriertransform import DiscreteFourierTransform
 from src.transform.autocorrelation import AutoCorrelation
 from src.transform.crosscorrelation import CrossCorrelation
@@ -38,7 +40,16 @@ def spikes(drawable, count=10, size=3, clone=DEFAULT_CLONE):
 def trunc(drawable, values):
     return Drawable(drawable.title, N=values, y=drawable.y[:values])
 
+def sub(drawable, start, end):
+    return Drawable(drawable.title, N=end - start, y=drawable.y[start:end])
+
+def absolute(drawable):
+    return Drawable(drawable.title, y=np.abs(drawable.y))
+
 # ANALYSIS
+
+def fft(drawable):
+    return trunc(Drawable("Spectrum", y=np.fft.fft(drawable.y)), values=int(drawable.getN() / 2))
 
 def dft(drawable):
     return trunc(DiscreteFourierTransform("Spectrum", drawable), values=int(drawable.getN() / 2))

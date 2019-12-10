@@ -5,6 +5,9 @@ def mult(*args):
     title = ' * '.join([arg.title for arg in list_args])
     return MultiplicationComposite(title, list_args[0], *list_args[1:])
 
+def mult_const(drawable, const):
+    return Drawable(drawable.title, y=drawable.y * const)
+
 class MultiplicationComposite(Drawable):
 
     def __init__(self, title, drawable, *args):

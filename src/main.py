@@ -18,12 +18,12 @@ from src.util.buider import const, line, rand, harmonic, dft, sub, fft, absolute
 canvas = Canvas()
 io = IOController()
 
-canvas.plot_interactive_ito(ito())
+# canvas.plot_interactive_ito(ito())
 
-# drawables = enumerate([
-#     io.read_from_csv("MSFT.csv"), const(),
-#     io.read_from_csv("AAPL.csv"), io.read_from_csv("PG.csv")
-# ])
+drawables = enumerate([
+    io.read_from_csv("MSFT.csv"), const(),
+    io.read_from_csv("AAPL.csv"), io.read_from_csv("PG.csv")
+])
 
 # wav = io.read_from_wav("ma.wav")
 # lowpassed = conv(wav, lowpass(dt=1/22050, fCut=250))
@@ -33,11 +33,11 @@ canvas.plot_interactive_ito(ito())
 # ])
 # io.save_to_wav(const(), 10000)
 
-# for i, drawable in drawables:
-#     canvas.add_drawable(drawable)
-# figure = canvas.plot()
-#
-# io.savePlotToFile(figure, "result")
+for i, drawable in drawables:
+    canvas.add_drawable(drawable)
+figure = canvas.plot()
+
+io.savePlotToFile(figure, "result")
 
 # TODO fix myrandom
 # TODO rename drawable metrics

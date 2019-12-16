@@ -61,5 +61,6 @@ class IOController:
             x[i] = x[i - 1] + 1 / rate
         return Drawable(filepath, x=x, y=data)
 
-    def save_to_wav(self, drawable):
-        wavfile.write(OUTPUT_FOLDER + drawable.title, self.last_rate, drawable.y)
+    def save_to_wav(self, drawable, rate=None):
+        r = self.last_rate if rate is None else rate
+        wavfile.write(OUTPUT_FOLDER + drawable.title, r, drawable.y.astype(np.int16))

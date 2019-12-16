@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+from matplotlib.widgets import Slider
 
 PLOT_SIZE = 10
 
@@ -25,3 +26,31 @@ class Canvas:
         is_stationary = "Стационарен" if drawable.is_stationary(intervals=10, delta_percent=0.05) else "Не стационарен"
         stddev = "Стандартное отклонение " + str(drawable.getStdDev())
         return is_stationary + "\n" + stddev + "\n\n"
+
+    def plot_interactive_ito(self, ito):
+        fig, ax = plt.subplots()
+        plt.subplots_adjust(left=0.1, bottom=0.25)
+        l, = plt.plot(ito.x, ito.y, lw=2)
+        ax.margins(x=0)
+        ax_a = plt.axes([0.1, 0.14, 0.8, 0.02])
+        ax_b = plt.axes([0.1, 0.1, 0.8, 0.02])
+        ax_c = plt.axes([0.1, 0.06, 0.8, 0.02])
+        ax_d = plt.axes([0.1, 0.02, 0.8, 0.02])
+        a_slider = Slider(ax_a, 'A', -500, 500, valinit=ito.a, valstep=5)
+        b_slide = Slider(ax_b, 'B', -0.01, 0.01, valinit=ito.b, valstep=0.00005, valfmt="%1.5f")
+        c_slide = Slider(ax_c, 'C', -5, 5, valinit=ito.c, valstep=0.05)
+        d_slide = Slider(ax_d, 'D', 1, 200, valinit=ito.d, valstep=1)
+
+        def update(val):
+            ito.a = a_slider.val
+            ito.b = b_slide.val
+            ito.c = c_slide.val
+            ito.d = d_slide.val
+            l.set_ydata(ito.calculateY())
+            fig.canvas.draw_idle()
+
+        a_slider.on_changed(update)
+        b_slide.on_changed(update)
+        c_slide.on_changed(update)
+        d_slide.on_changed(update)
+        plt.show()

@@ -2,6 +2,7 @@ from src.Canvas import Canvas
 from src.IOController import IOController
 from src.compositing.ConcatComposite import concat
 from src.compositing.MultiplicationComposite import mult, mult_const
+from src.drawable.Drawable import Drawable
 from src.drawable.cardiogram import ecg
 from src.drawable.itoprocess import ito
 from src.filter.bandpass import bandpass
@@ -17,36 +18,26 @@ from src.util.buider import const, line, rand, harmonic, dft, sub, fft, absolute
 canvas = Canvas()
 io = IOController()
 
-# a_us = io.read_from_csv("a.us.txt")
-# aa_us = io.read_from_csv("aa.us.txt")
-# aaap_us = io.read_from_csv("aaap.us.txt")
-# aaba_us = io.read_from_csv("aaba.us.txt")
+canvas.plot_interactive_ito(ito())
+
 # drawables = enumerate([
-#     sub(a_us, 1000, 2000), sub(aa_us, 0, 1000),
-#     aaap_us, sub(aaba_us, 2000, 3000)
+#     io.read_from_csv("MSFT.csv"), const(),
+#     io.read_from_csv("AAPL.csv"), io.read_from_csv("PG.csv")
 # ])
 
-wav = io.read_from_wav("ma.wav")
-lowpassed = conv(wav, lowpass(dt=1/22050, fCut=250))
-drawables = enumerate([
-    wav, absolute(fft(wav)),
-    lowpassed, const()
-])
+# wav = io.read_from_wav("ma.wav")
+# lowpassed = conv(wav, lowpass(dt=1/22050, fCut=250))
+# drawables = enumerate([
+#     wav, absolute(fft(wav)),
+#     lowpassed, const()
+# ])
+# io.save_to_wav(const(), 10000)
 
-io.save_to_wav(lowpassed)
-
-# io.clear_dirs()
-#
 # for i, drawable in drawables:
-#     io.writeToFile(drawable, ordinal=i + 1)
+#     canvas.add_drawable(drawable)
+# figure = canvas.plot()
 #
-# drawables = io.getDrawablesInDir()
-
-for i, drawable in drawables:
-    canvas.add_drawable(drawable)
-figure = canvas.plot()
-
-io.savePlotToFile(figure, "result")
+# io.savePlotToFile(figure, "result")
 
 # TODO fix myrandom
 # TODO rename drawable metrics

@@ -3,8 +3,8 @@ from src.util.common import N
 
 import numpy as np
 
-def ito(a=0, b=-0.002, c=1, d=70):
-    return ItoProcess("USA stock market", N, a, b, c, d)
+def ito(a=0, b=-0.002, c=1, d=70, n=N):
+    return ItoProcess("USA stock market", n, a, b, c, d)
 
 class ItoProcess(Drawable):
 
@@ -17,6 +17,6 @@ class ItoProcess(Drawable):
 
     def calculateY(self):
         m = np.exp(self.b * self.x)
-        s = np.sin(self.x / self.d)
+        s = self.d * np.sin(self.x / self.d)
         r = np.random.uniform(low=0, high=self.c, size=(len(self.x),))
         return self.a * self.c + self.x * m + self.d * s * r

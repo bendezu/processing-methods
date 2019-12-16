@@ -17,6 +17,9 @@ class Canvas:
             subplot.set_title(drawable.title)
             if show_desc:
                 subplot.set(xlabel=self.get_description(drawable))
+            else:
+                print("[" + drawable.title.upper() + "]")
+                print(self.get_description(drawable))
             subplot.plot(drawable.x, drawable.y)
         fig.tight_layout()
         plt.show()
@@ -24,8 +27,19 @@ class Canvas:
 
     def get_description(self, drawable):
         is_stationary = "Стационарен" if drawable.is_stationary(intervals=10, delta_percent=0.05) else "Не стационарен"
-        stddev = "Стандартное отклонение " + str(drawable.getStdDev())
-        return is_stationary + "\n" + stddev + "\n\n"
+        mean = str(drawable.getMean()) + " - Среднее значение"
+        dispersion = str(drawable.getDispersion()) + " - Дисперсия"
+        mean_square = str(drawable.meanSquare()) + " - Средний квадрат"
+        stddev = str(drawable.getStdDev()) + " - Стандартное отклонение"
+        mean_square_dev = str(drawable.meanSquareDev()) + " - Среднеквадратичное отклонение"
+        midpoint_3 = str(drawable.m(power=3)) + " - Центральный момент 3го порядка"
+        asymmetry_coeff = str(drawable.gamma1()) + " - Коэффициент асимметрии"
+        midpoint_4 = str(drawable.m(power=4)) + " - Центральный момент 4го порядка"
+        сultosis = str(drawable.gamma2()) + " - Культозис"
+        minimum = str(drawable.minimum()) + " - Минимальное значение"
+        maximum = str(drawable.maximum()) + " - Максимальное значение"
+        stat = [is_stationary, mean, dispersion, mean_square, stddev, mean_square_dev, midpoint_3, asymmetry_coeff, midpoint_4, сultosis, minimum, maximum]
+        return "\n".join(stat) + "\n\n"
 
     def plot_interactive_ito(self, ito):
         fig, ax = plt.subplots()

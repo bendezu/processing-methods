@@ -67,15 +67,23 @@ class Drawable:
                 return False
         return True
 
-    def getMean(self, array):
+    def getMean(self, array=None):
+        array = self.y if array is None else array
         return sum(array) / len(array)
 
-    def getDispersion(self, array):
+    def getDispersion(self, array=None):
+        array = self.y if array is None else array
         return self.m(power=2, array=array)
 
-    def getStdDev(self, array=None):
+    def meanSquare(self, array=None):
         array = self.y if array is None else array
+        return sum(array ** 2) / len(array)
+
+    def getStdDev(self, array=None):
         return math.sqrt(self.getDispersion(array))
+
+    def meanSquareDev(self, array=None):
+        return math.sqrt(self.meanSquare(array))
 
     def m(self, power, array=None):
         array = self.y if array is None else array
@@ -93,11 +101,11 @@ class Drawable:
     def gamma2(self):
         return self.m(power=4) / (self.getStdDev() ** 4) - 3
 
-    def psi2(self):
-        return sum(xi ** 2 for xi in self.y) / len(self.y)
+    def maximum(self):
+        return np.max(self.y)
 
-    def epsilon(self):
-        return math.sqrt(self.psi2())
+    def minimum(self):
+        return np.min(self.y)
 
     def getN(self):
         return len(self.x)

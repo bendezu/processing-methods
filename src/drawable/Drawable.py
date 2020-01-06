@@ -58,10 +58,8 @@ class Drawable:
             end = start + interval_size
             means[interval] = self.getMean(self.y[start:end])
             dispersions[interval] = self.getDispersion(self.y[start:end])
-
         # print("Среднее[] :" + str(means))
         # print("Дисперсия[] " + str(dispersions))
-
         for i in range(0, intervals - 1):
             if (math.sqrt(abs(dispersions[i] - dispersions[i + 1])) > delta * 2) or (abs(means[i] - means[i + 1]) > delta):
                 return False

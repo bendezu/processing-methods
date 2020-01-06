@@ -9,6 +9,7 @@ from src.drawable.Drawable import Drawable
 
 DATA_FORMAT = ".dat"
 FIGURE_FORMAT = ".png"
+WAV_FORMAT = ".wav"
 DELIMITER = ", "
 INPUT_FOLDER = "input/"
 OUTPUT_FOLDER = "output/"
@@ -59,8 +60,9 @@ class IOController:
         x = np.zeros(len(data))
         for i in range(1, len(data)):
             x[i] = x[i - 1] + 1 / rate
-        return Drawable(filepath, x=x, y=data)
+        return rate, Drawable(filepath, x=x, y=data)
 
     def save_to_wav(self, drawable, rate=None):
         r = self.last_rate if rate is None else rate
-        wavfile.write(OUTPUT_FOLDER + drawable.title, r, drawable.y.astype(np.int16))
+        filename = drawable.title if drawable.title.endswith(WAV_FORMAT) else drawable.title + WAV_FORMAT
+        wavfile.write(OUTPUT_FOLDER + filename, r, drawable.y.astype(np.int16))

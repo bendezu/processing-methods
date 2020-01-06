@@ -3,7 +3,7 @@ from src.util.common import N
 
 import numpy as np
 
-def ito(a=0, b=-0.002, c=1, d=70, n=N):
+def ito(a=-65, b=-0.00225, c=0.01, d=84, n=N):
     return ItoProcess("USA stock market", n, a, b, c, d)
 
 class ItoProcess(Drawable):

@@ -40,7 +40,8 @@ def spikes(drawable, count=10, size=3, clone=DEFAULT_CLONE):
 def trunc(drawable, values):
     return Drawable(drawable.title, N=values, y=drawable.y[:values])
 
-def sub(drawable, start, end):
+def sub(drawable, start, end=None):
+    end = drawable.getN() if end is None else end
     return Drawable(drawable.title, N=end - start, y=drawable.y[start:end])
 
 def absolute(drawable):
@@ -72,5 +73,5 @@ def anti_trend(drawable, window_size=3, clone=DEFAULT_CLONE):
 def auto(drawable):
     return AutoCorrelation("AutoCorrelation", drawable)
 
-def cross(d1, d2):
-    return CrossCorrelation("CrossCorrelation", d1, d2)
+def cross(d1, d2, start=0, end=N):
+    return CrossCorrelation("CrossCorrelation of "+d1.title+" and "+d2.title, d1, d2, start, end)

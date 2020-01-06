@@ -43,19 +43,19 @@ class IOController:
         figure.savefig(OUTPUT_FOLDER + name + FIGURE_FORMAT)
 
     def read_from_csv(self, filepath):
-        df = pd.read_csv(filepath)
+        df = pd.read_csv(INPUT_FOLDER + filepath)
         data = df['Open']
         return Drawable(filepath, N=len(data), y=data)
 
     def read_from_dat(self, filepath):
-        with open(filepath, 'rb') as input_file:
+        with open(INPUT_FOLDER + filepath, 'rb') as input_file:
             array_from_file = input_file.read()
         format = '{:d}f'.format(len(array_from_file) // 4)
         array_from_file = struct.unpack(format, array_from_file)
         return Drawable(filepath, N=len(array_from_file), y=array_from_file)
 
     def read_from_wav(self, filepath):
-        rate, data = wavfile.read(filepath)
+        rate, data = wavfile.read(INPUT_FOLDER + filepath)
         self.last_rate = rate
         x = np.zeros(len(data))
         for i in range(1, len(data)):

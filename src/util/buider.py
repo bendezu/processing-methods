@@ -8,19 +8,19 @@ from src.transform.crosscorrelation import CrossCorrelation
 from src.drawable.Drawable import Drawable
 from src.util.common import N, FROM_NUM, TO_NUM, DEFAULT_CLONE
 from src.drawable.Harmonic import Harmonic
-from src.drawable.Line import Line
+from src.drawable.Trend import Trend
 from src.drawable.Random import Random
 
 # BASE
 
 def line(k=-2, b=10):
-    return Line("Trend", N=N, k=k, b=b)
+    return Trend("Trend", N=N, k=k, b=b)
 
 def rand(start=FROM_NUM, end=TO_NUM):
     return Random("Random", N=N, fromNum=start, toNum=end)
 
 def const(value=0, n=N):
-    return Line("Const", N=n, k=0, b=value)
+    return Trend("Const", N=n, k=0, b=value)
 
 def harmonic(amplitude=10, frequency=15, delta_t=0.001, n=N):
     return Harmonic(title="Harmonic", N=n, A0=amplitude, f0=frequency, delta_t=delta_t)

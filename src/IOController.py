@@ -3,9 +3,11 @@ import struct
 
 import numpy as np
 import pandas as pd
+import cv2
 from scipy.io import wavfile
 
 from src.line.Line import Line
+from src.picture.Picture import Picture
 
 DATA_FORMAT = ".dat"
 FIGURE_FORMAT = ".png"
@@ -66,3 +68,6 @@ class IOController:
         r = self.last_rate if rate is None else rate
         filename = drawable.title if drawable.title.endswith(WAV_FORMAT) else drawable.title + WAV_FORMAT
         wavfile.write(OUTPUT_FOLDER + filename, r, drawable.y.astype(np.int16))
+
+    def read_from_jpg(self, filepath):
+        return Picture(filepath, cv2.imread(INPUT_FOLDER + filepath))

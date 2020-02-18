@@ -21,8 +21,10 @@ from src.util.buider import const, line, rand, harmonic, dft, sub, fft, absolute
 canvas = Canvas()
 io = IOController()
 
+img = io.read_from_jpg("grace.jpg")
+
 drawables = enumerate([
-    const(), const(),
+    const(), img,
     const(), const()
 ])
 

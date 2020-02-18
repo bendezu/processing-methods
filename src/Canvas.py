@@ -5,7 +5,6 @@ from src.line.Line import Line
 
 PLOT_SIZE = 10
 
-
 class Canvas:
     plotables = []
 

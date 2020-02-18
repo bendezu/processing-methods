@@ -50,7 +50,7 @@ def absolute(drawable):
 # ANALYSIS
 
 def fft(drawable):
-    return trunc(Drawable("Spectrum", y=np.fft.fft(drawable.y)), values=int(drawable.getN() / 2))
+    return absolute(trunc(Drawable("Spectrum", y=np.fft.fft(drawable.y)), values=int(drawable.getN() / 2)))
 
 def dft(drawable):
     return trunc(DiscreteFourierTransform("Spectrum", drawable), values=int(drawable.getN() / 2))
@@ -74,4 +74,4 @@ def auto(drawable):
     return AutoCorrelation("AutoCorrelation", drawable)
 
 def cross(d1, d2, start=0, end=N):
-    return CrossCorrelation("CrossCorrelation of "+d1.title+" and "+d2.title, d1, d2, start, end)
+    return CrossCorrelation("Cross of "+d1.title+" and "+d2.title, d1, d2, start, end)

@@ -1,3 +1,5 @@
+import copy
+
 from src.Canvas import Canvas
 from src.IOController import IOController
 from src.compositing.ConcatComposite import concat
@@ -14,21 +16,15 @@ from src.filter.lowpass import lowpass
 from src.transform.convolution import conv
 from src.transform.hammingwindow import window
 from src.transform.inversedft import idft
-from src.util.buider import const, line, rand, harmonic, dft, sub, fft, absolute, cross
+from src.util.buider import const, line, rand, harmonic, dft, sub, fft, absolute, cross, auto, anti_trend
 
 canvas = Canvas()
 io = IOController()
 
-rate, wav = io.read_from_wav("my-voice.wav")
-lowpassed = conv(wav, lowpass(dt=1/rate, fCut=300))
-highpassed = conv(wav, highpass(dt=1/rate, fCut=300))
 drawables = enumerate([
-    wav, absolute(fft(wav)),
-    lowpassed, absolute(fft(lowpassed)),
-    highpassed, absolute(fft(highpassed))
+    const(), const(),
+    const(), const()
 ])
-io.save_to_wav(lowpassed, rate)
-io.save_to_wav(highpassed, rate)
 
 for i, drawable in drawables:
     canvas.add_drawable(drawable)

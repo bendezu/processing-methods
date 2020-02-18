@@ -1,16 +1,21 @@
 import math
 import random
-
 import numpy as np
+from src.Plotable import Plotable
 
-
-class Line:
+class Line(Plotable):
 
     def __init__(self, title, N=0, x=None, y=None):
         self.title = title
         length = N if y is None else len(y)
         self.x = np.arange(0, length, 1) if x is None else x
         self.y = self.calculateY() if y is None else y
+
+    def get_title(self):
+        return self.title
+
+    def plot_on(self, subplot):
+        subplot.plot(self.x, self.y)
 
     def normalize(self, S):
         norm_x = ((self.x - self.x.min()) / (self.x.max() - self.x.min()) - 0.5) * 2 * S
@@ -26,7 +31,7 @@ class Line:
     def suppress_spikes(self, min_y, max_y):
         for i in range(self.getN()):
             if self.y[i] < min_y or self.y[i] > max_y:
-                self.y[i] = (self.y[i-1] + self.y[i+1]) / 2
+                self.y[i] = (self.y[i - 1] + self.y[i + 1]) / 2
 
     def anti_trend(self, window_size=3):
         window_radius = int(window_size / 2)

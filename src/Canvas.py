@@ -7,22 +7,22 @@ PLOT_SIZE = 10
 
 
 class Canvas:
-    drawables = []
+    plotables = []
 
-    def add_drawable(self, drawable):
-        self.drawables.append(drawable)
+    def add_drawable(self, plotable):
+        self.plotables.append(plotable)
 
     def plot(self, show_desc=False, show_console=False):
-        fig, axes = plt.subplots(nrows=round(len(self.drawables) / 2), ncols=2, figsize=(PLOT_SIZE, PLOT_SIZE))
-        for i, drawable in enumerate(self.drawables):
+        fig, axes = plt.subplots(nrows=round(len(self.plotables) / 2), ncols=2, figsize=(PLOT_SIZE, PLOT_SIZE))
+        for i, plotable in enumerate(self.plotables):
             subplot = axes[int(i / 2)][i % 2]
-            subplot.set_title(drawable.title)
-            if show_desc:
-                subplot.set(xlabel=self.get_description(drawable))
-            if show_console:
-                print("[" + drawable.title.upper() + "]")
-                print(self.get_description(drawable))
-            subplot.plot(drawable.x, drawable.y)
+            subplot.set_title(plotable.get_title())
+            # if show_desc:
+            #     subplot.set(xlabel=self.get_description(plotable))
+            # if show_console:
+            #     print("[" + plotable.title.upper() + "]")
+            #     print(self.get_description(plotable))
+            plotable.plot_on(subplot)
         fig.tight_layout()
         plt.show()
         return fig

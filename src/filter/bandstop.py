@@ -1,8 +1,8 @@
-from src.drawable.Drawable import Drawable
+from src.line.Line import Line
 from src.filter.lowpass import low_pass_filter
 
 def bandstop(n=128, dt=0.001, fCutLower=50, fCutUpper=100):
-    return Drawable("Band Stop Filter", y=band_stop_filter(n, dt, fCutLower, fCutUpper))
+    return Line("Band Stop Filter", y=band_stop_filter(n, dt, fCutLower, fCutUpper))
 
 def band_stop_filter(n, dt, fCutLower, fCutUpper):
     lpfLower = low_pass_filter(n, dt, fCutLower)

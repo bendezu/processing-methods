@@ -1,12 +1,12 @@
 import numpy as np
 
-from src.drawable.Drawable import Drawable
+from src.line.Line import Line
 from src.filter.halflowpass import half_low_pass_filter
 from src.filter.lowpass import low_pass_filter
 from src.util.common import N
 
 def highpass(n=128, dt=0.001, fCut=50):
-    return Drawable("High Pass Filter", y=high_pass_filter(n, dt, fCut))
+    return Line("High Pass Filter", y=high_pass_filter(n, dt, fCut))
 
 def high_pass_filter(n, dt, fCut):
     result = low_pass_filter(n, dt, fCut)

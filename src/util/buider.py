@@ -5,11 +5,11 @@ import numpy as np
 from src.transform.fouriertransform import DiscreteFourierTransform
 from src.transform.autocorrelation import AutoCorrelation
 from src.transform.crosscorrelation import CrossCorrelation
-from src.drawable.Drawable import Drawable
+from src.line.Line import Line
 from src.util.common import N, FROM_NUM, TO_NUM, DEFAULT_CLONE
-from src.drawable.Harmonic import Harmonic
-from src.drawable.Trend import Trend
-from src.drawable.Random import Random
+from src.line.Harmonic import Harmonic
+from src.line.Trend import Trend
+from src.line.Random import Random
 
 # BASE
 
@@ -38,19 +38,19 @@ def spikes(drawable, count=10, size=3, clone=DEFAULT_CLONE):
     return copied
 
 def trunc(drawable, values):
-    return Drawable(drawable.title, N=values, y=drawable.y[:values])
+    return Line(drawable.title, N=values, y=drawable.y[:values])
 
 def sub(drawable, start, end=None):
     end = drawable.getN() if end is None else end
-    return Drawable(drawable.title, N=end - start, y=drawable.y[start:end])
+    return Line(drawable.title, N=end - start, y=drawable.y[start:end])
 
 def absolute(drawable):
-    return Drawable(drawable.title, y=np.abs(drawable.y))
+    return Line(drawable.title, y=np.abs(drawable.y))
 
 # ANALYSIS
 
 def fft(drawable):
-    return absolute(trunc(Drawable("Spectrum", y=np.fft.fft(drawable.y)), values=int(drawable.getN() / 2)))
+    return absolute(trunc(Line("Spectrum", y=np.fft.fft(drawable.y)), values=int(drawable.getN() / 2)))
 
 def dft(drawable):
     return trunc(DiscreteFourierTransform("Spectrum", drawable), values=int(drawable.getN() / 2))

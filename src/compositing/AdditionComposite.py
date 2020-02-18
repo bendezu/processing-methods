@@ -1,11 +1,11 @@
-from src.drawable.Drawable import Drawable
+from src.line.Line import Line
 
 def add(*args):
     list_args = list(args)
     title = ' + '.join([arg.title for arg in list_args])
     return AdditionComposite(title, list_args[0], *list_args[1:])
 
-class AdditionComposite(Drawable):
+class AdditionComposite(Line):
 
     def __init__(self, title, drawable, *args):
         self.drawable = drawable

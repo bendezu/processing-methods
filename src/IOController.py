@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 from scipy.io import wavfile
 
-from src.drawable.Drawable import Drawable
+from src.line.Line import Line
 
 DATA_FORMAT = ".dat"
 FIGURE_FORMAT = ".png"
@@ -36,7 +36,7 @@ class IOController:
 
     def readFromFile(self, filename):
         x, y = np.loadtxt(INPUT_FOLDER + filename, delimiter=DELIMITER, unpack=True)
-        return Drawable(filename[3:-len(DATA_FORMAT)], x=x, y=y)
+        return Line(filename[3:-len(DATA_FORMAT)], x=x, y=y)
 
     def savePlotToFile(self, figure, name):
         os.makedirs(OUTPUT_FOLDER, exist_ok=True)
@@ -45,14 +45,14 @@ class IOController:
     def read_from_csv(self, filepath):
         df = pd.read_csv(INPUT_FOLDER + filepath)
         data = df['Open']
-        return Drawable(filepath, N=len(data), y=data)
+        return Line(filepath, N=len(data), y=data)
 
     def read_from_dat(self, filepath):
         with open(INPUT_FOLDER + filepath, 'rb') as input_file:
             array_from_file = input_file.read()
         format = '{:d}f'.format(len(array_from_file) // 4)
         array_from_file = np.array(struct.unpack(format, array_from_file))
-        return Drawable(title=filepath, N=len(array_from_file), y=array_from_file)
+        return Line(title=filepath, N=len(array_from_file), y=array_from_file)
 
     def read_from_wav(self, filepath):
         rate, data = wavfile.read(INPUT_FOLDER + filepath)
@@ -60,7 +60,7 @@ class IOController:
         x = np.zeros(len(data))
         for i in range(1, len(data)):
             x[i] = x[i - 1] + 1 / rate
-        return rate, Drawable(filepath, x=x, y=data)
+        return rate, Line(filepath, x=x, y=data)
 
     def save_to_wav(self, drawable, rate=None):
         r = self.last_rate if rate is None else rate

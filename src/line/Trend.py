@@ -1,7 +1,7 @@
-from src.drawable.Drawable import Drawable
+from src.line.Line import Line
 
 
-class Trend(Drawable):
+class Trend(Line):
 
     def __init__(self, title, N, k, b):
         self.k = k

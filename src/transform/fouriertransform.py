@@ -1,9 +1,9 @@
 import math
 
-from src.drawable.Drawable import Drawable
+from src.line.Line import Line
 
 
-class DiscreteFourierTransform(Drawable):
+class DiscreteFourierTransform(Line):
 
     def __init__(self, title, drawable):
         self.drawable = drawable

@@ -1,10 +1,10 @@
 import math
 import time
 
-from src.drawable.Drawable import Drawable
+from src.line.Line import Line
 
 
-class MyRandom(Drawable):
+class MyRandom(Line):
 
     def __init__(self, title, N, fromNum, toNum):
         self.fromNum = fromNum

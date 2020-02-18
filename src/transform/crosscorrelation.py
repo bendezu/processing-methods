@@ -1,10 +1,10 @@
 import numpy as np
 
-from src.drawable.Drawable import Drawable
+from src.line.Line import Line
 from src.util.common import N
 
 
-class CrossCorrelation(Drawable):
+class CrossCorrelation(Line):
 
     def __init__(self, title, drawable_first, drawable_second, start=0, end=N):
         self.drawable_first = drawable_first

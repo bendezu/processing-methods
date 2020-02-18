@@ -1,6 +1,6 @@
 import math
 
-from src.drawable.Drawable import Drawable
+from src.line.Line import Line
 from src.util.common import N
 
 import numpy as np
@@ -8,7 +8,7 @@ import numpy as np
 def wiener(c=1, s0=100, n=N):
     return WienerItoProcess("USA stock market", n, c, s0)
 
-class WienerItoProcess(Drawable):
+class WienerItoProcess(Line):
 
     def __init__(self, title, N, c, s0):
         self.s0 = s0

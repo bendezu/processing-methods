@@ -4,10 +4,10 @@ from src.Canvas import Canvas
 from src.IOController import IOController
 from src.compositing.ConcatComposite import concat
 from src.compositing.MultiplicationComposite import mult, mult_const
-from src.drawable.Drawable import Drawable
-from src.drawable.cardiogram import ecg
-from src.drawable.itoprocess import ito
-from src.drawable.wienerprocess import wiener
+from src.line.Line import Line
+from src.line.cardiogram import ecg
+from src.line.itoprocess import ito
+from src.line.wienerprocess import wiener
 from src.filter.bandpass import bandpass
 from src.filter.bandstop import bandstop
 from src.filter.halflowpass import halflowpass
@@ -33,6 +33,6 @@ figure = canvas.plot()
 io.savePlotToFile(figure, "result")
 
 # TODO fix myrandom
-# TODO rename drawable metrics
+# TODO rename line metrics
 # TODO dft adjust scale
 # TODO suppress spikes by sliding window

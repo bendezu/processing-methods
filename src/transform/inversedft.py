@@ -1,11 +1,11 @@
 import math
 
-from src.drawable.Drawable import Drawable
+from src.line.Line import Line
 
 def idft(drawable):
     return InverseDiscreteFourierTransform("Inverse DFT", drawable)
 
-class InverseDiscreteFourierTransform(Drawable):
+class InverseDiscreteFourierTransform(Line):
 
     def __init__(self, title, drawable):
         self.drawable = drawable

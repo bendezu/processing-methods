@@ -4,7 +4,7 @@ import random
 import numpy as np
 
 
-class Drawable:
+class Line:
 
     def __init__(self, title, N=0, x=None, y=None):
         self.title = title

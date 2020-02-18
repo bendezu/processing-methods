@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.widgets import Slider, Button
-from src.drawable.Drawable import Drawable
+from src.line.Line import Line
 
 PLOT_SIZE = 10
 
@@ -72,7 +72,7 @@ class Canvas:
         plt.show()
 
     def plot_interactive_wiener(self):
-        from src.drawable.wienerprocess import wiener
+        from src.line.wienerprocess import wiener
         offset = 2000
         length = 758
         first_val = 120
@@ -80,7 +80,7 @@ class Canvas:
         def build_y(wiener, value):
             y = wiener.calculateY()[offset:]
             y = y - y[0] + value
-            print(self.get_description(Drawable("", y=y)))
+            print(self.get_description(Line("", y=y)))
             return y
 
         wiener = wiener(s0=0, n=offset + length)

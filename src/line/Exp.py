@@ -1,8 +1,8 @@
 import numpy as np
-from src.drawable.Drawable import Drawable
+from src.line.Line import Line
 
 
-class Exp(Drawable):
+class Exp(Line):
 
     def __init__(self, title, N, alpha, beta):
         self.alpha = alpha

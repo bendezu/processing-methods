@@ -2,13 +2,13 @@ import math
 
 import numpy as np
 
-from src.drawable.Drawable import Drawable
+from src.line.Line import Line
 
 
 def window(drawable, alpha=0.46):
     return HammingWindow("Hamming Window", drawable, alpha)
 
-class HammingWindow(Drawable):
+class HammingWindow(Line):
 
     def __init__(self, title, drawable, alpha):
         self.drawable = drawable

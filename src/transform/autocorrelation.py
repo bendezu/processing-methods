@@ -1,7 +1,7 @@
-from src.drawable.Drawable import Drawable
+from src.line.Line import Line
 
 
-class AutoCorrelation(Drawable):
+class AutoCorrelation(Line):
 
     def __init__(self, title, drawable, start=0, end=None):
         self.drawable = drawable

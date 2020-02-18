@@ -1,4 +1,4 @@
-from src.drawable.Drawable import Drawable
+from src.line.Line import Line
 
 def mult(*args):
     list_args = list(args)
@@ -6,9 +6,9 @@ def mult(*args):
     return MultiplicationComposite(title, list_args[0], *list_args[1:])
 
 def mult_const(drawable, const):
-    return Drawable(drawable.title, y=drawable.y * const)
+    return Line(drawable.title, y=drawable.y * const)
 
-class MultiplicationComposite(Drawable):
+class MultiplicationComposite(Line):
 
     def __init__(self, title, drawable, *args):
         self.drawable = drawable

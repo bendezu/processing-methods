@@ -1,4 +1,4 @@
-from src.drawable.Drawable import Drawable
+from src.line.Line import Line
 from src.util.common import N
 
 import numpy as np
@@ -6,7 +6,7 @@ import numpy as np
 def ito(a=-65, b=-0.00225, c=0.01, d=84, n=N):
     return ItoProcess("USA stock market", n, a, b, c, d)
 
-class ItoProcess(Drawable):
+class ItoProcess(Line):
 
     def __init__(self, title, N, a, b, c, d):
         self.a = a

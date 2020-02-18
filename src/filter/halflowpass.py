@@ -1,11 +1,11 @@
 import math
 
 import numpy as np
-from src.drawable.Drawable import Drawable
+from src.line.Line import Line
 from src.util.common import N
 
 def halflowpass(n=128, dt=0.001, fCut=50):
-    return Drawable("Half Low Pass Filter", y=half_low_pass_filter(n, dt, fCut))
+    return Line("Half Low Pass Filter", y=half_low_pass_filter(n, dt, fCut))
 
 SMOOTH_WINDOW_P310 = [0.35577019, 0.24369830, 0.07211497, 0.00630165]
 

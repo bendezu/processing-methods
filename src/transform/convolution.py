@@ -1,12 +1,12 @@
 import numpy as np
 
-from src.drawable.Drawable import Drawable
+from src.line.Line import Line
 from src.util.common import N
 
 def conv(d1, d2):
     return Convolution("Conv of " + d1.title + " and " + d2.title, d1, d2)
 
-class Convolution(Drawable):
+class Convolution(Line):
 
     def __init__(self, title, drawable_first, drawable_second):
         self.drawable_first = drawable_first

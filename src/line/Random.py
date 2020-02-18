@@ -1,8 +1,8 @@
 import numpy as np
-from src.drawable.Drawable import Drawable
+from src.line.Line import Line
 
 
-class Random(Drawable):
+class Random(Line):
 
     def __init__(self, title, N, fromNum, toNum):
         self.fromNum = fromNum

@@ -1,11 +1,11 @@
 import math
 
-from src.drawable.Drawable import Drawable
+from src.line.Line import Line
 
 import numpy as np
 
 
-class Harmonic(Drawable):
+class Harmonic(Line):
 
     def __init__(self, title, N, A0, f0, delta_t):
         self.A0 = A0

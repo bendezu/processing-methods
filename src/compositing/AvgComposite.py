@@ -1,13 +1,13 @@
 import numpy as np
 
-from src.drawable.Drawable import Drawable
+from src.line.Line import Line
 
 def avg(*args):
     list_args = list(args)
     title = ' ~ '.join([arg.title for arg in list_args])
     return AvgComposite(title, list_args[0], *list_args[1:])
 
-class AvgComposite(Drawable):
+class AvgComposite(Line):
 
     def __init__(self, title, drawable, *args):
         self.drawable = drawable

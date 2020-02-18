@@ -10,4 +10,4 @@ class Picture(Plotable):
         return self.title
 
     def plot_on(self, subplot):
-        subplot.imshow(self.matrix)
+        subplot.imshow(self.matrix, cmap="gray")

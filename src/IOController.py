@@ -70,4 +70,4 @@ class IOController:
         wavfile.write(OUTPUT_FOLDER + filename, r, drawable.y.astype(np.int16))
 
     def read_from_jpg(self, filepath):
-        return Picture(filepath, cv2.imread(INPUT_FOLDER + filepath))
+        return Picture(filepath, cv2.imread(INPUT_FOLDER + filepath, cv2.IMREAD_GRAYSCALE))

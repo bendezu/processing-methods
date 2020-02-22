@@ -15,14 +15,16 @@ from src.util.buider import const, line, rand, harmonic, dft, sub, fft, absolute
 canvas = Canvas()
 io = IOController()
 
-img1 = io.read_from_jpg("image1.jpg")
-img2 = io.read_from_jpg("image2.jpg")
+def lesson2():
+    img1 = io.read_from_jpg("image1.jpg")
+    img2 = io.read_from_jpg("image2.jpg")
+    return np.array([
+        (neg(img1), neg(img2)),
+        (gamma(img1, C=1, gamma=1.1), gamma(img2, C=1, gamma=0.3)),
+        (log(img1, C=1), log(img2, C=1))
+    ])
 
-plotables = np.array([
-    (neg(img1), neg(img2)),
-    (gamma(img1, C=1, gamma=1.1), gamma(img2, C=1, gamma=0.3)),
-    (log(img1, C=1), log(img2, C=1))
-])
+plotables = lesson2()
 canvas.set_plotables(plotables)
 figure = canvas.plot()
 

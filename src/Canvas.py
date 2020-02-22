@@ -6,22 +6,27 @@ from src.line.Line import Line
 PLOT_SIZE = 10
 
 class Canvas:
-    plotables = []
 
-    def add_drawable(self, plotable):
+    def add_plotable(self, plotable):
         self.plotables.append(plotable)
 
+    def set_plotables(self, plotables):
+        self.plotables = plotables
+
     def plot(self, show_desc=False, show_console=False):
-        fig, axes = plt.subplots(nrows=round(len(self.plotables) / 2), ncols=2, figsize=(PLOT_SIZE, PLOT_SIZE))
-        for i, plotable in enumerate(self.plotables):
-            subplot = axes[int(i / 2)][i % 2]
-            subplot.set_title(plotable.get_title())
-            # if show_desc:
-            #     subplot.set(xlabel=self.get_description(plotable))
-            # if show_console:
-            #     print("[" + plotable.title.upper() + "]")
-            #     print(self.get_description(plotable))
-            plotable.plot_on(subplot)
+        rows, cols = self.plotables.shape
+        fig, axes = plt.subplots(nrows=rows, ncols=cols, figsize=(PLOT_SIZE, PLOT_SIZE))
+        for i in range(rows):
+            for j in range(cols):
+                plotable = self.plotables[i, j]
+                subplot = axes[i][j]
+                subplot.set_title(plotable.get_title())
+                # if show_desc:
+                #     subplot.set(xlabel=self.get_description(plotable))
+                # if show_console:
+                #     print("[" + plotable.title.upper() + "]")
+                #     print(self.get_description(plotable))
+                plotable.plot_on(subplot)
         fig.tight_layout()
         plt.show()
         return fig

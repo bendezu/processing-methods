@@ -28,7 +28,5 @@ figure = canvas.plot()
 
 io.savePlotToFile(figure, "result")
 
-# TODO fix myrandom
-# TODO rename line metrics
-# TODO dft adjust scale
-# TODO suppress spikes by sliding window
+# TODO deconvolution
+# TODO image scale up(bilinear & k-nearest neighbors)/down

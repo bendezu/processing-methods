@@ -3,8 +3,6 @@ import numpy as np
 from matplotlib.widgets import Slider, Button
 from src.line.Line import Line
 
-PLOT_SIZE = 10
-
 class Canvas:
 
     def add_plotable(self, plotable):
@@ -15,7 +13,7 @@ class Canvas:
 
     def plot(self, show_desc=False, show_console=False):
         rows, cols = self.plotables.shape
-        fig, axes = plt.subplots(nrows=rows, ncols=cols, figsize=(PLOT_SIZE, PLOT_SIZE))
+        fig, axes = plt.subplots(nrows=rows, ncols=cols, figsize=(20, 9.6))
         for i in range(rows):
             for j in range(cols):
                 plotable = self.plotables[i, j]
@@ -41,10 +39,10 @@ class Canvas:
         midpoint_3 = str(drawable.m(power=3)) + " - Центральный момент 3го порядка"
         asymmetry_coeff = str(drawable.gamma1()) + " - Коэффициент асимметрии"
         midpoint_4 = str(drawable.m(power=4)) + " - Центральный момент 4го порядка"
-        сultosis = str(drawable.gamma2()) + " - Культозис"
+        cultosis = str(drawable.gamma2()) + " - Культозис"
         minimum = str(drawable.minimum()) + " - Минимальное значение"
         maximum = str(drawable.maximum()) + " - Максимальное значение"
-        stat = [is_stationary, mean, dispersion, mean_square, stddev, mean_square_dev, midpoint_3, asymmetry_coeff, midpoint_4, сultosis, minimum, maximum]
+        stat = [is_stationary, mean, dispersion, mean_square, stddev, mean_square_dev, midpoint_3, asymmetry_coeff, midpoint_4, cultosis, minimum, maximum]
         return "\n".join(stat) + "\n\n"
 
     def plot_interactive_ito(self, ito):

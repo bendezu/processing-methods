@@ -7,13 +7,20 @@ from src.compositing.ConcatComposite import concat
 from src.compositing.MultiplicationComposite import mult, mult_const
 from src.line.Line import Line
 from src.picture.postprocessing import neg, gamma, log
+from src.picture.scaling import scale
 from src.transform.convolution import conv
 from src.transform.hammingwindow import window
-from src.transform.inversedft import idft
-from src.util.buider import const, line, rand, harmonic, dft, sub, fft, absolute, cross, auto, anti_trend
+from src.util.buider import const, line, rand, sub, absolute, cross, auto, anti_trend
 
 canvas = Canvas()
 io = IOController()
+
+def lesson1():
+    img = io.read_from_jpg("grace.jpg")
+    return np.array([
+        (img, scale(img, ratio=2)),
+        (scale(img, ratio=1.5), scale(img, ratio=0.5))
+    ])
 
 def lesson2():
     img1 = io.read_from_jpg("image1.jpg")
@@ -24,11 +31,11 @@ def lesson2():
         (log(img1, C=1), log(img2, C=1))
     ])
 
-plotables = lesson2()
+plotables = lesson1()
 canvas.set_plotables(plotables)
 figure = canvas.plot()
 
 io.savePlotToFile(figure, "result")
 
 # TODO deconvolution
-# TODO image scale up(bilinear & k-nearest neighbors)/down
+# TODO image scale up(bilinear)/down

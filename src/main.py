@@ -6,8 +6,9 @@ from src.IOController import IOController
 from src.compositing.ConcatComposite import concat
 from src.compositing.MultiplicationComposite import mult, mult_const
 from src.line.Line import Line
-from src.picture.postprocessing import neg, gamma, log
+from src.picture.postprocessing import neg, gamma, log, transform
 from src.picture.scaling import scale
+from src.picture.statistic import histogram, cdf
 from src.transform.convolution import conv
 from src.transform.hammingwindow import window
 from src.util.buider import const, line, rand, sub, absolute, cross, auto, anti_trend
@@ -31,7 +32,16 @@ def lesson2():
         (log(img1, C=1), log(img2, C=1))
     ])
 
-plotables = lesson1()
+def lesson3():
+    img = io.read_from_jpg("HollywoodLC-1.jpg")
+    img2 = transform(img, cdf(img))
+    return np.array([
+        (img, histogram(img)),
+        (img, cdf(img)),
+        (img2, histogram(img2))
+    ])
+
+plotables = lesson3()
 canvas.set_plotables(plotables)
 figure = canvas.plot()
 
@@ -39,3 +49,4 @@ io.savePlotToFile(figure, "result")
 
 # TODO deconvolution
 # TODO image scale up(bilinear)/down
+# TODO invert cdf

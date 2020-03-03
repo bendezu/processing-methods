@@ -7,6 +7,15 @@ from src.util.common import N, create_array
 def ecg(freq=10, amplitude=120, dt=0.005, interval=200, relaxation=15):
     return Cardiogram("Cardiogram", N, freq, amplitude, dt, interval, relaxation)
 
+def base(f=10, k=15, dt=0.005, n=N):
+    multiplier = 2 * math.pi * f * dt
+    y = create_array(n, lambda i: math.sin(multiplier * i) * math.exp(-k * dt * i))
+    return Line("", y=y)
+
+def delta(interval=200, n=N):
+    y = create_array(n, lambda i: 1 if i % interval == 0 else 0,)
+    return Line("", y=y)
+
 class Cardiogram(Line):
 
     def __init__(self, title, N, f, a, dt, interval, k):

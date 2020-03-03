@@ -6,15 +6,25 @@ from src.IOController import IOController
 from src.compositing.ConcatComposite import concat
 from src.compositing.MultiplicationComposite import mult, mult_const
 from src.line.Line import Line
+from src.line.cardiogram import ecg, base, delta
 from src.picture.postprocessing import neg, gamma, log, transform
 from src.picture.scaling import scale
 from src.picture.statistic import histogram, cdf
-from src.transform.convolution import conv
+from src.transform.convolution import conv, deconv
 from src.transform.hammingwindow import window
-from src.util.buider import const, line, rand, sub, absolute, cross, auto, anti_trend
+from src.util.buider import const, line, rand, sub, absolute, cross, auto, anti_trend, harmonic, spikes
 
 canvas = Canvas()
 io = IOController()
+
+def lesson0():
+    first = base()
+    second = delta()
+    convolution = conv(first, second)
+    return np.array([
+        (first, second),
+        (convolution, deconv(convolution, first))
+    ])
 
 def lesson1():
     img = io.read_from_jpg("grace.jpg")

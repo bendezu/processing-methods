@@ -19,8 +19,8 @@ io = IOController()
 def lesson1():
     img = io.read_from_jpg("grace.jpg")
     return np.array([
-        (img, scale(img, ratio=2)),
-        (scale(img, ratio=1.5), scale(img, ratio=0.5))
+        (img, scale(img, ratio=3, strategy="nearest-neighbor"), scale(img, ratio=0.5, strategy="nearest-neighbor")),
+        (img, scale(img, ratio=3, strategy="bilinear"), scale(img, ratio=0.5, strategy="bilinear"))
     ])
 
 def lesson2():
@@ -41,7 +41,7 @@ def lesson3():
         (img2, histogram(img2))
     ])
 
-plotables = lesson3()
+plotables = lesson1()
 canvas.set_plotables(plotables)
 figure = canvas.plot()
 

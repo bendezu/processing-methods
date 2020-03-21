@@ -1,3 +1,5 @@
+from matplotlib.colors import Normalize
+
 from src.Plotable import Plotable
 
 class Picture(Plotable):
@@ -10,4 +12,4 @@ class Picture(Plotable):
         return self.title
 
     def plot_on(self, subplot):
-        subplot.imshow(self.matrix, cmap="gray")
+        subplot.imshow(self.matrix, cmap="gray", norm=Normalize(0, 255))

@@ -71,3 +71,16 @@ class IOController:
 
     def read_from_jpg(self, filepath):
         return Picture(filepath, cv2.imread(INPUT_FOLDER + filepath, cv2.IMREAD_GRAYSCALE))
+
+    def read_from_xcr(self, filepath, width=400, height=300, normalize=True):
+        matrix = []
+        with open(INPUT_FOLDER + filepath, 'rb') as f:
+            for i in range(height):
+                row = width * [0] # np.zeros(width)
+                for j in range(width):
+                    row[j] = int.from_bytes(f.read(2), 'little', signed=False)
+                matrix.append(row)
+        nparray = np.asarray(matrix).astype('float64')
+        if normalize:
+            nparray = 255 * (nparray - nparray.min()) / nparray.ptp()
+        return Picture(filepath, nparray.astype('uint8'))

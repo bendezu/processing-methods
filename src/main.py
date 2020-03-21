@@ -5,14 +5,17 @@ from src.Canvas import Canvas
 from src.IOController import IOController
 from src.compositing.ConcatComposite import concat
 from src.compositing.MultiplicationComposite import mult, mult_const
+from src.filter.bandpass import bandpass
+from src.filter.bandstop import bandstop, bsf_pic, bsf_line
 from src.line.Line import Line
 from src.line.cardiogram import ecg, base, delta
+from src.picture.noising import gaussian_noise, salt_and_pepper, all_noise
 from src.picture.postprocessing import neg, gamma, log, transform
 from src.picture.scaling import scale
 from src.picture.statistic import histogram, cdf
 from src.transform.convolution import conv, deconv
 from src.transform.hammingwindow import window
-from src.util.buider import const, line, rand, sub, absolute, cross, auto, anti_trend, harmonic, spikes
+from src.util.buider import const, line, rand, sub, absolute, cross, auto, anti_trend, harmonic, spikes, dft
 
 canvas = Canvas()
 io = IOController()
@@ -51,12 +54,20 @@ def lesson3():
         (img2, histogram(img2))
     ])
 
-plotables = lesson1()
+def lesson4():
+    xcr = io.read_from_xcr('h400x300.xcr')
+    sample_line = Line("line", y=xcr.matrix[100])
+    bs_line = bsf_line(sample_line, lowcut=100, highcut=150)
+    bs_pic = bsf_pic(xcr, lowcut=100, highcut=150)
+    return np.array([
+        (xcr, sample_line),
+        # (xcr, dft(line)),
+        (bs_pic, bs_line),
+        # (bs_pic, dft(bs_line))
+    ])
+
+plotables = lesson4()
 canvas.set_plotables(plotables)
 figure = canvas.plot()
 
 io.savePlotToFile(figure, "result")
-
-# TODO deconvolution
-# TODO image scale up(bilinear)/down
-# TODO invert cdf

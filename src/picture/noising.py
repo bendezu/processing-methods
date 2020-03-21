@@ -15,14 +15,13 @@ def gaussian_noise(picture: Picture, percent, clone=True):
     pic.matrix = picture.matrix + gauss.astype(np.uint8)
     return pic
 
-def salt_and_pepper(picture: Picture, clone=True):
+def salt_and_pepper(picture: Picture, percent=0.05, clone=True):
     pic = copy.deepcopy(picture) if clone else picture
-    probability = 0.004
     for pixel in np.nditer(pic.matrix, op_flags=['readwrite']):
-        if random.random() < probability:
+        if random.random() < percent:
             salt_or_pepper = random.choice([0, 255])
             pixel[...] = salt_or_pepper
     return pic
 
-def all_noise(picture: Picture, gaus_percent, clone=True):
-    return salt_and_pepper(gaussian_noise(picture, gaus_percent, clone), clone=False)
+def all_noise(picture: Picture, gaus_percent, snp_percent, clone=True):
+    return salt_and_pepper(gaussian_noise(picture, gaus_percent, clone), snp_percent, clone=False)

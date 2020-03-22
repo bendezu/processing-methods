@@ -53,7 +53,7 @@ def fft(drawable):
     return absolute(trunc(Line("Spectrum", y=np.fft.fft(drawable.y)), values=int(drawable.getN() / 2)))
 
 def dft(drawable):
-    return trunc(DiscreteFourierTransform("Spectrum", drawable), values=int(drawable.getN() / 2))
+    return trunc(DiscreteFourierTransform("dft of " + drawable.title, drawable), values=int(drawable.getN() / 2))
 
 def anti_shift(drawable, y_min=FROM_NUM, y_max=TO_NUM, clone=DEFAULT_CLONE):
     copied = copy.deepcopy(drawable) if clone else drawable

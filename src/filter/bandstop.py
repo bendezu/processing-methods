@@ -32,7 +32,7 @@ def bsf_pic(picture: Picture, lowcut, highcut, clone=True):
         pic.matrix[i] = _bsf(row, lowcut, highcut, len(row))
     return pic
 
-def _bsf(data, lowcut, highcut, fs, order=4):
+def _bsf(data, lowcut, highcut, fs, order=5):
     nyq = 0.5 * fs
     low = lowcut / nyq
     high = highcut / nyq

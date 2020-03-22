@@ -8,14 +8,13 @@ from src.picture.Picture import Picture
 def gaussian_noise(picture: Picture, percent, clone=True):
     pic = copy.deepcopy(picture) if clone else picture
     mean = 0
-    var = percent * 255
-    sigma = var ** 0.5
+    std_dev = 255 * percent
     rows, cols = picture.matrix.shape
-    gauss = np.random.normal(mean, sigma, (rows, cols)).reshape(rows, cols)
-    pic.matrix = picture.matrix + gauss.astype(np.uint8)
+    gauss = np.random.normal(mean, std_dev, (rows, cols)).reshape(rows, cols)
+    pic.matrix = picture.matrix + gauss
     return pic
 
-def salt_and_pepper(picture: Picture, percent=0.05, clone=True):
+def salt_and_pepper(picture: Picture, percent, clone=True):
     pic = copy.deepcopy(picture) if clone else picture
     for pixel in np.nditer(pic.matrix, op_flags=['readwrite']):
         if random.random() < percent:

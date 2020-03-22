@@ -33,7 +33,7 @@ def hpf_pic(picture: Picture, cut, clone=True):
         pic.matrix[i] = _hpf(row, cut, len(row))
     return pic
 
-def _hpf(data, cut, fs, order=5):
+def _hpf(data, cut, fs, order=8):
     nyq = 0.5 * fs
     f_cut = cut / nyq
     b, a = signal.butter(order, f_cut, btype='high')

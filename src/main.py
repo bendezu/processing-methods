@@ -12,7 +12,7 @@ from src.filter.lowpass import lpf_line, lpf_pic
 from src.line.Line import Line
 from src.line.cardiogram import ecg, base, delta
 from src.picture.Picture import Picture
-from src.picture.filtering import wiener
+from src.picture.filtering import mean_filter, median_filter
 from src.picture.noising import gaussian_noise, salt_and_pepper, all_noise
 from src.picture.postprocessing import neg, gamma, log, transform, substract
 from src.picture.scaling import scale
@@ -145,7 +145,37 @@ def lesson5():
         (a_lpf, a_line_lpf, dft(a_line_lpf, scale=True)),
     ])
 
-plotables = lesson5()
+def lesson6():
+    img = io.read_from_jpg('MODEL.jpg')
+    gauss1 = gaussian_noise(img, percent=0.01)
+    gauss5 = gaussian_noise(img, percent=0.05)
+    gauss15 = gaussian_noise(img, percent=0.15)
+    snp1 = salt_and_pepper(img, percent=0.01)
+    snp5 = salt_and_pepper(img, percent=0.05)
+    snp15 = salt_and_pepper(img, percent=0.15)
+    all1 = all_noise(img, gaus_percent=0.01, snp_percent=0.01)
+    all5 = all_noise(img, gaus_percent=0.05, snp_percent=0.05)
+    all15 = all_noise(img, gaus_percent=0.15, snp_percent=0.15)
+
+    # return np.array([
+    #     (gauss1, gauss5, gauss15),
+    #     (snp1, snp5, snp15),
+    #     (all1, all5, all15),
+    # ])
+
+    # return np.array([
+    #     (mean_filter(gauss1, size=5), mean_filter(gauss5, size=7), mean_filter(gauss15, size=11)),
+    #     (mean_filter(snp1, size=7), mean_filter(snp5, size=11), mean_filter(snp15, size=13)),
+    #     (mean_filter(all1, size=11), mean_filter(all5, size=15), mean_filter(all15, size=21)),
+    # ])
+
+    return np.array([
+        (median_filter(gauss1, size=3), median_filter(gauss5, size=7), median_filter(gauss15, size=15)),
+        (median_filter(snp1, size=3), median_filter(snp5, size=3), median_filter(snp15, size=5)),
+        (median_filter(all1, size=5), median_filter(all5, size=11), median_filter(all15, size=25)),
+    ])
+
+plotables = lesson6()
 canvas.set_plotables(plotables)
 figure = canvas.plot()
 

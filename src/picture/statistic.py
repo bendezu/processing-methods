@@ -3,9 +3,8 @@ import numpy as np
 from src.line.Line import Line
 from src.picture.Picture import Picture
 
-
 def histogram(picture: Picture):
-    hist = np.zeros(max(256, picture.matrix.max() + 1))
+    hist = np.zeros(256)
     for pixel in np.nditer(picture.matrix, op_flags=['readwrite']):
         hist[pixel] += 1
     return Line('histogram of ' + picture.title, y=hist)

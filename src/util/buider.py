@@ -6,7 +6,7 @@ from src.transform.fouriertransform import DiscreteFourierTransform
 from src.transform.autocorrelation import AutoCorrelation
 from src.transform.crosscorrelation import CrossCorrelation
 from src.line.Line import Line
-from src.util.common import N, FROM_NUM, TO_NUM, DEFAULT_CLONE
+from src.util.common import N, FROM_NUM, TO_NUM, DEFAULT_CLONE, scale_array
 from src.line.Harmonic import Harmonic
 from src.line.Trend import Trend
 from src.line.Random import Random
@@ -52,8 +52,11 @@ def absolute(drawable):
 def fft(drawable):
     return absolute(trunc(Line("Spectrum", y=np.fft.fft(drawable.y)), values=int(drawable.getN() / 2)))
 
-def dft(drawable):
-    return trunc(DiscreteFourierTransform("dft of " + drawable.title, drawable), values=int(drawable.getN() / 2))
+def dft(drawable: Line, scale=False):
+    result = trunc(DiscreteFourierTransform("dft of " + drawable.title, drawable), values=int(drawable.getN() / 2))
+    if scale:
+        result.x = scale_array(result.x, right=0.5)
+    return result
 
 def anti_shift(drawable, y_min=FROM_NUM, y_max=TO_NUM, clone=DEFAULT_CLONE):
     copied = copy.deepcopy(drawable) if clone else drawable

@@ -11,7 +11,7 @@ def gaussian_noise(picture: Picture, percent, clone=True):
     std_dev = 255 * percent
     rows, cols = picture.matrix.shape
     gauss = np.random.normal(mean, std_dev, (rows, cols)).reshape(rows, cols)
-    pic.matrix = picture.matrix + gauss
+    pic.matrix = (picture.matrix + gauss).astype('uint8')
     return pic
 
 def salt_and_pepper(picture: Picture, percent, clone=True):

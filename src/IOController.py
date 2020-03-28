@@ -8,6 +8,7 @@ from scipy.io import wavfile
 
 from src.line.Line import Line
 from src.picture.Picture import Picture
+from src.util.common import scale_array
 
 DATA_FORMAT = ".dat"
 FIGURE_FORMAT = ".png"
@@ -82,5 +83,5 @@ class IOController:
                 matrix.append(row)
         nparray = np.asarray(matrix).astype('float64')
         if normalize:
-            nparray = 255 * (nparray - nparray.min()) / nparray.ptp()
+            nparray = scale_array(nparray, right=255)
         return Picture(filepath, nparray.astype('uint8'))

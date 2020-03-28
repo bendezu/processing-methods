@@ -10,3 +10,7 @@ def create_array(n, factory):
     for i in range(n):
         arr[i] = factory(i)
     return arr
+
+def scale_array(nparray, left=0, right=1):
+    width = right - left
+    return (width * (nparray - nparray.min()) / nparray.ptp()) + left

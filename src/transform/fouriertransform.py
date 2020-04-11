@@ -1,7 +1,7 @@
 import math
 
 from src.line.Line import Line
-
+import numpy as np
 
 class DiscreteFourierTransform(Line):
 
@@ -23,3 +23,18 @@ class DiscreteFourierTransform(Line):
             imag_sum = imag_sum / n
             result[k] = math.sqrt(real_sum * real_sum + imag_sum * imag_sum)
         return result
+
+def _dft(y):
+    n = len(y)
+    reals = np.zeros(n)
+    imags = np.zeros(n)
+    for k in range(n):
+        sumReal = 0
+        sumImag = 0
+        for t in range(n):
+            angle = (2 * math.pi * k * t) / n
+            sumReal += y[t] * math.cos(angle)
+            sumImag += y[t] * math.sin(angle)
+        reals[k] = sumReal / n
+        imags[k] = sumImag / n
+    return reals, imags

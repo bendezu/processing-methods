@@ -2,6 +2,9 @@ import math
 import numpy as np
 
 from src.line.Line import Line
+from src.transform.fouriertransform import _dft
+from src.transform.inversedft import _idft
+
 
 def conv(d1, d2):
     return Convolution("Conv of " + d1.title + " and " + d2.title, d1, d2)
@@ -30,43 +33,14 @@ def deconv(d1: Line, d2: Line):
     return Line("Deconv of " + d1.title + " and " + d2.title, y=_deconv(d1.y, d2.y))
 
 def _deconv(arr1, arr2):
-
-    def _idft(reals, imags):
-        n = len(reals)
-        result = np.zeros(n)
-        for k in range(n):
-            summ = 0
-            for t in range(n):
-                angle = (2 * math.pi * k * t) / n
-                summ += reals[t] * math.cos(angle) + imags[t] * math.sin(angle)
-            result[k] = summ
-        return result
-
-    def _dft(y):
-        n = len(y)
-        reals = np.zeros(n)
-        imags = np.zeros(n)
-        for k in range(n):
-            sumReal = 0
-            sumImag = 0
-            for t in range(n):
-                angle = (2 * math.pi * k * t) / n
-                sumReal += y[t] * math.cos(angle)
-                sumImag += y[t] * math.sin(angle)
-            reals[k] = sumReal / n
-            imags[k] = sumImag / n
-        return reals, imags
-
     r_1, i_1 = _dft(arr1)
     r_2, i_2 = _dft(arr2)
-    r_3 = np.zeros(len(r_1))
-    i_3 = np.zeros(len(r_1))
-
-    for i in range(len(r_3)):
-        a = r_1[i]
-        b = i_1[i]
-        c = r_2[i]
-        d = i_2[i]
-        r_3[i] = (a * c + b * d) / (c * c + d * d)
-        i_3[i] = (b * c - a * d) / (c * c + d * d)
+    r_3, i_3 = _complex_division(r_1, i_1, r_2, i_2)
     return _idft(r_3, i_3)
+
+def _complex_division(r1, i1, r2, i2):
+    # (r1 + i i1) / (r2 + i i2)
+    divider = (r2 ** 2 + i2 ** 2)
+    r = (r1 * r2 + i1 * i2) / divider
+    i = (i1 * r2 - r1 * i2) / divider
+    return r, i

@@ -26,7 +26,10 @@ class Convolution(Line):
             result[i] = summ
         return result
 
-def deconv(d1, d2):
+def deconv(d1: Line, d2: Line):
+    return Line("Deconv of " + d1.title + " and " + d2.title, y=_deconv(d1.y, d2.y))
+
+def _deconv(arr1, arr2):
 
     def _idft(reals, imags):
         n = len(reals)
@@ -54,8 +57,8 @@ def deconv(d1, d2):
             imags[k] = sumImag / n
         return reals, imags
 
-    r_1, i_1 = _dft(d1.y)
-    r_2, i_2 = _dft(d2.y)
+    r_1, i_1 = _dft(arr1)
+    r_2, i_2 = _dft(arr2)
     r_3 = np.zeros(len(r_1))
     i_3 = np.zeros(len(r_1))
 
@@ -66,5 +69,4 @@ def deconv(d1, d2):
         d = i_2[i]
         r_3[i] = (a * c + b * d) / (c * c + d * d)
         i_3[i] = (b * c - a * d) / (c * c + d * d)
-
-    return Line("Deconv of " + d1.title + " and " + d2.title, y=_idft(r_3, i_3))
+    return _idft(r_3, i_3)

@@ -14,7 +14,7 @@ from src.line.cardiogram import ecg, base, delta
 from src.picture.Picture import Picture
 from src.picture.filtering import mean_filter, median_filter
 from src.picture.noising import gaussian_noise, salt_and_pepper, all_noise
-from src.picture.postprocessing import neg, gamma, log, transform
+from src.picture.postprocessing import neg, gamma, log, transform, deconv_pic
 from src.picture.scaling import scale
 from src.picture.statistic import histogram, cdf
 from src.transform.convolution import conv, deconv
@@ -179,9 +179,31 @@ def lesson7():
     kernel = io.read_from_dat("kernL64_f4.dat")
     blurred = io.read_img_from_dat("blur259x185L.dat")
     blurred_noised = io.read_img_from_dat("blur259x185L_N.dat")
+
+    padded_kernel = concat(kernel, const(value=0, n=259-kernel.getN()))
+    dft_kernel = dft(padded_kernel, scale=True)
+    b_line = blurred.get_line(110)
+    bn_line = blurred_noised.get_line(110)
+    dft_b_line = dft(b_line, scale=True)
+    dft_bn_line = dft(bn_line, scale=True)
+
+    deconv_b_line = deconv(b_line, padded_kernel)
+    deconv_bn_line = deconv(bn_line, padded_kernel)
+
+    # return np.array([
+    #     (padded_kernel, dft_kernel),
+    #     (blurred, blurred_noised),
+    #     (b_line, bn_line),
+    #     (dft_b_line, dft_bn_line),
+    #     (deconv_b_line, deconv_bn_line),
+    # ])
+
+    deconv_b = deconv_pic(blurred, padded_kernel)
+    deconv_bn = deconv_pic(blurred_noised, padded_kernel)
+
     return np.array([
-        (kernel, blurred),
-        (dft(kernel), blurred_noised)
+        (blurred, blurred_noised),
+        (deconv_b, deconv_bn),
     ])
 
 plotables = lesson7()

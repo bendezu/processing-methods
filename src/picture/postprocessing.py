@@ -2,6 +2,10 @@ import copy
 import math
 import numpy as np
 
+from src.line.Line import Line
+from src.picture.Picture import Picture
+from src.transform.convolution import _deconv
+
 def neg(picture, clone=True):
     pic = copy.deepcopy(picture) if clone else picture
     l_max = 255
@@ -25,4 +29,12 @@ def transform(picture, function, clone=True):
     pic = copy.deepcopy(picture) if clone else picture
     for pixel in np.nditer(pic.matrix, op_flags=['readwrite']):
         pixel[...] = function.y[pixel]
+    return pic
+
+def deconv_pic(picture: Picture, kernel: Line, clone=True):
+    pic = copy.deepcopy(picture) if clone else picture
+    rows, cols = picture.matrix.shape
+    for i in range(rows):
+        row = picture.matrix[i]
+        pic.matrix[i] = _deconv(row, kernel.y)
     return pic

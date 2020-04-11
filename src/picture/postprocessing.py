@@ -4,7 +4,8 @@ import numpy as np
 
 from src.line.Line import Line
 from src.picture.Picture import Picture
-from src.transform.convolution import _deconv
+from src.transform.convolution import _deconv, _regularized_deconv
+
 
 def neg(picture, clone=True):
     pic = copy.deepcopy(picture) if clone else picture
@@ -37,4 +38,12 @@ def deconv_pic(picture: Picture, kernel: Line, clone=True):
     for i in range(rows):
         row = picture.matrix[i]
         pic.matrix[i] = _deconv(row, kernel.y)
+    return pic
+
+def reg_deconv_pic(picture: Picture, kernel: Line, k, clone=True):
+    pic = copy.deepcopy(picture) if clone else picture
+    rows, cols = picture.matrix.shape
+    for i in range(rows):
+        row = picture.matrix[i]
+        pic.matrix[i] = _regularized_deconv(row, kernel.y, k)
     return pic

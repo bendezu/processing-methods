@@ -85,3 +85,12 @@ class IOController:
         if normalize:
             nparray = scale_array(nparray, right=255)
         return Picture(filepath, nparray.astype('uint8'))
+
+    def read_img_from_dat(self, filepath, width=259, height=185):
+        with open(INPUT_FOLDER + filepath, 'rb') as f:
+            whole_data = f.read()
+        format = '{:d}f'.format(len(whole_data) // 4)
+        whole_array = np.array(struct.unpack(format, whole_data))
+        matrix = whole_array.reshape((height, width))
+        return Picture(filepath, matrix)
+        pass

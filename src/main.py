@@ -14,9 +14,9 @@ from src.line.cardiogram import ecg, base, delta
 from src.picture.Picture import Picture
 from src.picture.filtering import mean_filter, median_filter
 from src.picture.noising import gaussian_noise, salt_and_pepper, all_noise
-from src.picture.postprocessing import neg, gamma, log, transform, substract
+from src.picture.postprocessing import neg, gamma, log, transform
 from src.picture.scaling import scale
-from src.picture.statistic import histogram, cdf, fft2
+from src.picture.statistic import histogram, cdf
 from src.transform.convolution import conv, deconv
 from src.transform.hammingwindow import window
 from src.util.buider import const, line, rand, sub, absolute, cross, auto, anti_trend, harmonic, spikes, dft
@@ -175,7 +175,16 @@ def lesson6():
         (median_filter(all1, size=5), median_filter(all5, size=11), median_filter(all15, size=25)),
     ])
 
-plotables = lesson6()
+def lesson7():
+    kernel = io.read_from_dat("kernL64_f4.dat")
+    blurred = io.read_img_from_dat("blur259x185L.dat")
+    blurred_noised = io.read_img_from_dat("blur259x185L_N.dat")
+    return np.array([
+        (kernel, blurred),
+        (dft(kernel), blurred_noised)
+    ])
+
+plotables = lesson7()
 canvas.set_plotables(plotables)
 figure = canvas.plot()
 

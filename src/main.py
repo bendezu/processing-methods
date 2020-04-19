@@ -14,12 +14,14 @@ from src.line.cardiogram import ecg, base, delta
 from src.picture.Picture import Picture
 from src.picture.filtering import mean_filter, median_filter
 from src.picture.noising import gaussian_noise, salt_and_pepper, all_noise
-from src.picture.postprocessing import neg, gamma, log, transform, deconv_pic, reg_deconv_pic
+from src.picture.operations import or_pic, xor_pic, and_pic
+from src.picture.postprocessing import neg, gamma, log, transform, deconv_pic, reg_deconv_pic, diff_pic
 from src.picture.scaling import scale
+from src.picture.segmentation import thresholding, sobel
 from src.picture.statistic import histogram, cdf
 from src.transform.convolution import conv, deconv, reg_deconv
 from src.transform.hammingwindow import window
-from src.util.buider import const, line, rand, sub, absolute, cross, auto, anti_trend, harmonic, spikes, dft
+from src.util.buider import const, line, rand, sub, absolute, cross, auto, anti_trend, harmonic, spikes, dft, diff
 
 canvas = Canvas()
 io = IOController()
@@ -209,7 +211,32 @@ def lesson7():
         (deconv_bn, deconv_bn_line),
     ])
 
-plotables = lesson7()
+def lesson8():
+    img = io.read_from_jpg("MODEL.jpg")
+    thresh_img = thresholding(img, thresh=200)
+    diff_thresh_img = diff_pic(thresh_img) # contour
+    hpf_img = hpf_pic(img, cut=167) # contour
+
+    noised = gaussian_noise(img, percent=0.15)
+    thresh_noised = thresholding(noised, thresh=200)
+    lpf = lpf_pic(noised, cut=10)
+    hpf = hpf_pic(noised, cut=10)
+    white = thresholding(lpf, thresh=130) # part of contour
+
+    l1 = lpf_pic(thresh_noised, cut=15)
+    t1 = thresholding(l1, thresh=80)
+    l2 = lpf_pic(t1, cut=15)
+    d2 = diff_pic(l2)
+    t2 = thresholding(d2, thresh=30) # contour
+
+    median = median_filter(thresh_noised, size=5)
+    diff_median = diff_pic(median) # contour
+    return np.array([
+        (noised, thresh_noised, median, diff_median),
+        (l2, d2, t2, sobel(median)),
+    ])
+
+plotables = lesson8()
 canvas.set_plotables(plotables)
 figure = canvas.plot()
 

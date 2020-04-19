@@ -8,7 +8,7 @@ from src.picture.Picture import Picture
 def gaussian_noise(picture: Picture, percent, clone=True):
     pic = copy.deepcopy(picture) if clone else picture
     mean = 0
-    std_dev = 255 * percent
+    std_dev = 255 / 2 * percent
     rows, cols = picture.matrix.shape
     gauss = np.random.normal(mean, std_dev, (rows, cols)).reshape(rows, cols)
     pic.matrix = (picture.matrix + gauss).astype('uint8')

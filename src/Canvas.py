@@ -13,7 +13,7 @@ class Canvas:
 
     def plot(self, show_desc=False, show_console=False):
         rows, cols = self.plotables.shape
-        fig, axes = plt.subplots(nrows=rows, ncols=cols, figsize=(20, 9.6))
+        fig, axes = plt.subplots(nrows=rows, ncols=cols, figsize=(20, 9.6), squeeze=False)
         for i in range(rows):
             for j in range(cols):
                 plotable = self.plotables[i, j]

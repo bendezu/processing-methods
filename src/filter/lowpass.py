@@ -28,7 +28,7 @@ def lpf_pic(picture: Picture, cut, clone=True):
         pic.matrix[i] = _lpf(row, cut, len(row))
     return pic
 
-def _lpf(data, cut, fs, order=5):
+def _lpf(data, cut, fs, order=1):
     nyq = 0.5 * fs
     f_cut = cut / nyq
     b, a = signal.butter(order, f_cut, btype='low')

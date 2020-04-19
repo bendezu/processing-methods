@@ -49,6 +49,9 @@ def absolute(drawable):
 
 # ANALYSIS
 
+def diff(line: Line):
+    return Line("diff of " + line.title, y=np.diff(line.y.astype("int32")))
+
 def fft(drawable):
     return absolute(trunc(Line("Spectrum", y=np.fft.fft(drawable.y)), values=int(drawable.getN() / 2)))
 

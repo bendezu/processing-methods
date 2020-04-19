@@ -47,3 +47,11 @@ def reg_deconv_pic(picture: Picture, kernel: Line, k, clone=True):
         row = picture.matrix[i]
         pic.matrix[i] = _regularized_deconv(row, kernel.y, k)
     return pic
+
+def diff_pic(picture: Picture, clone=True):
+    pic = copy.deepcopy(picture) if clone else picture
+    rows, cols = picture.matrix.shape
+    for i in range(rows):
+        dy = np.diff(picture.matrix[i].astype('int32'), append=0)
+        pic.matrix[i] = np.abs(dy)
+    return pic

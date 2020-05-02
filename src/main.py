@@ -15,9 +15,9 @@ from src.picture.Picture import Picture
 from src.picture.filtering import mean_filter, median_filter
 from src.picture.noising import gaussian_noise, salt_and_pepper, all_noise
 from src.picture.operations import or_pic, xor_pic, and_pic
-from src.picture.postprocessing import neg, gamma, log, transform, deconv_pic, reg_deconv_pic, diff_pic
+from src.picture.postprocessing import neg, gamma, log, transform, deconv_pic, reg_deconv_pic
 from src.picture.scaling import scale
-from src.picture.segmentation import thresholding, sobel
+from src.picture.segmentation import thresholding, sobel, diff_pic, laplace
 from src.picture.statistic import histogram, cdf
 from src.transform.convolution import conv, deconv, reg_deconv
 from src.transform.hammingwindow import window
@@ -236,7 +236,24 @@ def lesson8():
         (l2, d2, t2, sobel(median)),
     ])
 
-plotables = lesson8()
+def lesson9():
+    img = io.read_from_jpg("MODEL.jpg")
+    thresh_img = thresholding(img, thresh=200)
+    noised = gaussian_noise(img, percent=0.15)
+    thresh_noised = thresholding(noised, thresh=200)
+    # return np.array([
+    #     (diff_pic(thresh_img), diff_pic(thresh_img, axis='x'), diff_pic(thresh_img, axis='y')),
+    #     (laplace(thresh_img), laplace(thresh_img, axis='x'), laplace(thresh_img, axis='y')),
+    #     (sobel(thresh_img), sobel(thresh_img, axis='x'), sobel(thresh_img, axis='y')),
+    # ])
+    median = median_filter(thresh_noised, size=7)
+    return np.array([
+        (diff_pic(median), diff_pic(median, axis='x'), diff_pic(median, axis='y')),
+        (laplace(median), thresh_noised, median),
+        (sobel(median), noised, sobel(median, axis='y')),
+    ])
+
+plotables = lesson9()
 canvas.set_plotables(plotables)
 figure = canvas.plot()
 

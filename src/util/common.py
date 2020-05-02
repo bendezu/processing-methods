@@ -4,6 +4,7 @@ N = 1000
 FROM_NUM = -100
 TO_NUM = 100
 DEFAULT_CLONE = True
+DEF_MORTH_SIZE = 5
 
 def create_array(n, factory):
     arr = np.zeros(n)

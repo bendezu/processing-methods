@@ -14,14 +14,15 @@ from src.line.cardiogram import ecg, base, delta
 from src.picture.Picture import Picture
 from src.picture.filtering import mean_filter, median_filter
 from src.picture.noising import gaussian_noise, salt_and_pepper, all_noise
-from src.picture.operations import or_pic, xor_pic, and_pic
+from src.picture.operations import or_pic, xor_pic, and_pic, minus_pic
 from src.picture.postprocessing import neg, gamma, log, transform, deconv_pic, reg_deconv_pic
 from src.picture.scaling import scale
-from src.picture.segmentation import thresholding, sobel, diff_pic, laplace
+from src.picture.segmentation import thresholding, sobel, diff_pic, laplace, erode, dilate, closing, opening
 from src.picture.statistic import histogram, cdf
 from src.transform.convolution import conv, deconv, reg_deconv
 from src.transform.hammingwindow import window
 from src.util.buider import const, line, rand, sub, absolute, cross, auto, anti_trend, harmonic, spikes, dft, diff
+from src.util.common import scale_array
 
 canvas = Canvas()
 io = IOController()
@@ -253,7 +254,30 @@ def lesson9():
         (sobel(median), noised, sobel(median, axis='y')),
     ])
 
-plotables = lesson9()
+def lesson10():
+    img = io.read_from_jpg("MODEL.jpg")
+    thresh_img = thresholding(img, thresh=200)
+    erode_img = erode(thresh_img)
+    dilate_img = dilate(thresh_img)
+    return np.array([
+        (img, thresh_img),
+        (erode_img, minus_pic(thresh_img, erode_img)),
+        (dilate_img, minus_pic(dilate_img, thresh_img)),
+    ])
+    noised = gaussian_noise(img, percent=0.15)
+    thresh_noised = thresholding(noised, thresh=200)
+    a1 = closing(thresh_noised, size=3)
+    a2 = opening(a1, size=5)
+    a3 = closing(a2, size=7)
+    a4 = erode(a3)
+    import cv2
+    return np.array([
+        (noised, thresh_noised, noised),
+        (a1, a2, a3),
+        (a4, minus_pic(a3, a4), Picture("kernel", scale_array(cv2.getStructuringElement(cv2.MORPH_CROSS, (7, 7)), left=0, right=255))),
+    ])
+
+plotables = lesson10()
 canvas.set_plotables(plotables)
 figure = canvas.plot()
 

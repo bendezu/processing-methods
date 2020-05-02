@@ -5,6 +5,7 @@ import numpy as np
 
 from scipy import ndimage
 from src.picture.Picture import Picture
+from src.util.common import DEF_MORTH_SIZE
 
 
 def thresholding(picture: Picture, thresh=100, clone=True):
@@ -47,4 +48,30 @@ def laplace(picture: Picture, axis='full', clone=True):
     # elif axis == 'y':
     #     pic.matrix = dy
     ndimage.filters.laplace(picture.matrix, pic.matrix)
+    return pic
+
+def erode(picture: Picture, size=DEF_MORTH_SIZE, clone=True):
+    pic = copy.deepcopy(picture) if clone else picture
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (size, size))
+    pic.matrix = cv2.erode(picture.matrix, kernel)
+    return pic
+
+def dilate(picture: Picture, size=DEF_MORTH_SIZE, clone=True):
+    pic = copy.deepcopy(picture) if clone else picture
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (size, size))
+    pic.matrix = cv2.dilate(picture.matrix, kernel)
+    return pic
+
+def opening(picture: Picture, size=DEF_MORTH_SIZE, clone=True):
+    # erosion followed by dilation
+    pic = copy.deepcopy(picture) if clone else picture
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (size, size))
+    pic.matrix = cv2.morphologyEx(picture.matrix, cv2.MORPH_OPEN, kernel)
+    return pic
+
+def closing(picture: Picture, size=DEF_MORTH_SIZE, clone=True):
+    # dilation followed by erosion
+    pic = copy.deepcopy(picture) if clone else picture
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (size, size))
+    pic.matrix = cv2.morphologyEx(picture.matrix, cv2.MORPH_CLOSE, kernel)
     return pic

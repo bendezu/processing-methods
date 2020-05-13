@@ -43,7 +43,7 @@ def scale(picture, ratio=None, w_ratio=None, h_ratio=None, w_target=None, h_targ
         h_target = round(h * h_ratio)
     elif w_target is not None:
         w_ratio = w_target / w
-        h_ratio = h_ratio / h
+        h_ratio = h_target / h
     scaled = np.empty((h_target, w_target))
 
     if strategy == "nearest-neighbor":

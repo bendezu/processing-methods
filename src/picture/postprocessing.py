@@ -17,7 +17,7 @@ def neg(picture, clone=True):
 def gamma(picture, C, gamma, clone=True):
     pic = copy.deepcopy(picture) if clone else picture
     for pixel in np.nditer(pic.matrix, op_flags=['readwrite']):
-        pixel[...] = C * pixel ** gamma
+        pixel[...] = min(C * (pixel ** gamma), 255)
     return pic
 
 def log(picture, C, clone=True):

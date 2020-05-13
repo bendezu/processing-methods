@@ -1,4 +1,6 @@
 import copy
+
+import cv2
 import numpy as np
 
 from src.Canvas import Canvas
@@ -14,7 +16,7 @@ from src.line.cardiogram import ecg, base, delta
 from src.picture.Picture import Picture
 from src.picture.filtering import mean_filter, median_filter
 from src.picture.noising import gaussian_noise, salt_and_pepper, all_noise
-from src.picture.operations import or_pic, xor_pic, and_pic, minus_pic
+from src.picture.operations import or_pic, xor_pic, and_pic, minus_pic, plus_pic
 from src.picture.postprocessing import neg, gamma, log, transform, deconv_pic, reg_deconv_pic
 from src.picture.scaling import scale
 from src.picture.segmentation import thresholding, sobel, diff_pic, laplace, erode, dilate, closing, opening
@@ -259,11 +261,11 @@ def lesson10():
     thresh_img = thresholding(img, thresh=200)
     erode_img = erode(thresh_img)
     dilate_img = dilate(thresh_img)
-    return np.array([
-        (img, thresh_img),
-        (erode_img, minus_pic(thresh_img, erode_img)),
-        (dilate_img, minus_pic(dilate_img, thresh_img)),
-    ])
+    # return np.array([
+    #     (img, thresh_img),
+    #     (erode_img, minus_pic(thresh_img, erode_img)),
+    #     (dilate_img, minus_pic(dilate_img, thresh_img)),
+    # ])
     noised = gaussian_noise(img, percent=0.15)
     thresh_noised = thresholding(noised, thresh=200)
     a1 = closing(thresh_noised, size=3)
@@ -277,7 +279,57 @@ def lesson10():
         (a4, minus_pic(a3, a4), Picture("kernel", scale_array(cv2.getStructuringElement(cv2.MORPH_CROSS, (7, 7)), left=0, right=255))),
     ])
 
-plotables = lesson10()
+def lesson11():
+    brain_h = io.read_from_xcr('brain-H_x512.bin', width=512, height=512)
+    brain_v = io.read_from_xcr('brain-V_x256.bin', width=256, height=256)
+    spine_h = io.read_from_xcr('spine-H_x256.bin', width=256, height=256)
+    spine_v = io.read_from_xcr('spine-V_x512.bin', width=512, height=512)
+    # return np.array([
+    #     (brain_h, brain_v, histogram(brain_h), histogram(brain_v)),
+    #     (spine_h, spine_v, histogram(spine_h), histogram(spine_v)),
+    # ])
+
+    gamma_bh = gamma(brain_h, C=1.3, gamma=1.05)
+    gamma_bv = gamma(brain_v, C=1.3, gamma=1.05)
+    gamma_sh = gamma(spine_h, C=1.3, gamma=1.2)
+    gamma_sv = gamma(spine_v, C=1.3, gamma=1.3)
+
+    thresh_bh = thresholding(gamma_bh, thresh=18)
+    thresh_bv = thresholding(gamma_bv, thresh=18)
+    thresh_sh = thresholding(gamma_sh, thresh=18)
+    thresh_sv = thresholding(gamma_sv, thresh=18)
+
+    and_bh = and_pic(gamma_bh, thresh_bh)
+    and_bv = and_pic(gamma_bv, thresh_bv)
+    and_sh = and_pic(gamma_sh, thresh_sh)
+    and_sv = and_pic(gamma_sv, thresh_sv)
+
+    median_bh = mean_filter(and_bh, size=3)
+    median_bv = mean_filter(and_bv, size=3)
+    median_sh = mean_filter(and_sh, size=3)
+    median_sv = mean_filter(and_sv, size=3)
+
+    equal_bh = Picture("", cv2.equalizeHist(median_bh.matrix))
+    equal_bv = Picture("", cv2.equalizeHist(median_bv.matrix))
+    equal_sh = Picture("", cv2.equalizeHist(median_sh.matrix))
+    equal_sv = Picture("", cv2.equalizeHist(median_sv.matrix))
+
+    # return np.array([
+    #     (histogram(median_bh), cdf(median_bh), Picture("", cv2.equalizeHist(median_bh.matrix))),
+    #     (histogram(median_bv), cdf(median_bv), Picture("", cv2.equalizeHist(median_bv.matrix))),
+    #     (histogram(median_sh), cdf(median_sh), Picture("", cv2.equalizeHist(median_sh.matrix))),
+    #     (histogram(median_sv), cdf(median_sv), Picture("", cv2.equalizeHist(median_sv.matrix))),
+    # ])
+
+    return np.array([
+        (brain_h, scale(equal_bh, w_target=400, h_target=400)),
+        (brain_v, scale(equal_bv, w_target=400, h_target=400)),
+        (spine_h, scale(equal_sh, w_target=400, h_target=400)),
+        (spine_v, scale(equal_sv, w_target=400, h_target=400)),
+    ]).T
+
+
+plotables = lesson11()
 canvas.set_plotables(plotables)
 figure = canvas.plot()
 
